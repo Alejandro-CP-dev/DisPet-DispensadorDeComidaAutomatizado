@@ -68,9 +68,62 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
+    <Content Include="Default.aspx" />
+    <Content Include="Login.aspx" />
+    <Content Include="Site.Master" />
+    <Content Include="Tablero.aspx" />
+    <Content Include="Mascotas.aspx" />
+    <Content Include="Horarios.aspx" />
+    <Content Include="Historial.aspx" />
+    <Content Include="Estilos\Site.css" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Master.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tablero.aspx.cs">
+      <DependentUpon>Tablero.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Mascotas.aspx.cs">
+      <DependentUpon>Mascotas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Horarios.aspx.cs">
+      <DependentUpon>Horarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Historial.aspx.cs">
+      <DependentUpon>Historial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Modelo\Usuario.cs" />
+    <Compile Include="Modelo\Dispensador.cs" />
+    <Compile Include="Modelo\Mascota.cs" />
+    <Compile Include="Modelo\Horario.cs" />
+    <Compile Include="Modelo\HorarioDia.cs" />
+    <Compile Include="Modelo\Dispensacion.cs" />
+    <Compile Include="Datos\ConexionBD.cs" />
+    <Compile Include="Datos\UsuarioDatos.cs" />
+    <Compile Include="Datos\DispensadorDatos.cs" />
+    <Compile Include="Datos\MascotaDatos.cs" />
+    <Compile Include="Datos\HorarioDatos.cs" />
+    <Compile Include="Datos\DispensacionDatos.cs" />
+    <Compile Include="Logica\UsuarioLogica.cs" />
+    <Compile Include="Logica\MascotaLogica.cs" />
+    <Compile Include="Logica\HorarioLogica.cs" />
+    <Compile Include="Logica\DispensadorLogica.cs" />
+    <Compile Include="Logica\DispensacionLogica.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
