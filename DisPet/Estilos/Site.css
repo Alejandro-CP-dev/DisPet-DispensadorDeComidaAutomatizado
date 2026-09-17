@@ -1,0 +1,125 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Segoe UI, Arial, sans-serif;
+    background-color: #f2f4f5;
+    color: #222;
+}
+
+.encabezado {
+    background-color: #2e7d5b;
+    color: #fff;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.encabezado h1 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.menu a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 18px;
+    font-size: 14px;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+.contenido {
+    max-width: 960px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+.tarjeta {
+    background-color: #fff;
+    border: 1px solid #d9dcdd;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.mensaje-error {
+    background-color: #fdecea;
+    color: #a11;
+    border: 1px solid #f4c3c1;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 16px;
+}
+
+.mensaje-exito {
+    background-color: #e7f6ee;
+    color: #1a6b3c;
+    border: 1px solid #bfe6d0;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 16px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #e2e4e5;
+    font-size: 14px;
+}
+
+table th {
+    background-color: #eef1f0;
+}
+
+.campo {
+    margin-bottom: 12px;
+}
+
+.campo label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.campo input[type="text"],
+.campo input[type="password"],
+.campo input[type="number"],
+.campo select {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.boton {
+    background-color: #2e7d5b;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.boton:hover {
+    background-color: #256349;
+}
+
+.boton-secundario {
+    background-color: #6b7280;
+}
+
+.boton-secundario:hover {
+    background-color: #565d67;
+}

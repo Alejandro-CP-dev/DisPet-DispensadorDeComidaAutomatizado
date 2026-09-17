@@ -1,0 +1,26 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="DisPet.SiteMaster" %>
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <meta charset="utf-8" />
+    <title>DISPET</title>
+    <link rel="stylesheet" type="text/css" href="~/Estilos/Site.css" />
+</head>
+<body>
+    <form id="formPrincipal" runat="server">
+        <div class="encabezado">
+            <h1>DISPET</h1>
+            <div class="menu">
+                <a href="~/Tablero.aspx" runat="server">Tablero</a>
+                <a href="~/Mascotas.aspx" runat="server">Mascotas</a>
+                <a href="~/Horarios.aspx" runat="server">Horarios</a>
+                <a href="~/Historial.aspx" runat="server">Historial</a>
+                <asp:LinkButton ID="botonCerrarSesion" runat="server" OnClick="botonCerrarSesion_Click">Cerrar sesion (<asp:Literal ID="literalUsuario" runat="server" />)</asp:LinkButton>
+            </div>
+        </div>
+        <div class="contenido">
+            <asp:ContentPlaceHolder ID="contenidoPrincipal" runat="server" />
+        </div>
+    </form>
+</body>
+</html>
