@@ -12,6 +12,7 @@ namespace DisPet
         protected Literal literalMensaje;
         protected Literal literalNombreDispensador;
         protected Literal literalNivel;
+        protected Literal literalBarraNivel;
         protected Literal literalConectado;
         protected Literal literalBateria;
         protected GridView listaHorariosHoy;
@@ -60,13 +61,23 @@ namespace DisPet
             literalNombreDispensador.Text = dispensador.Nombre;
             literalNivel.Text = dispensador.NivelActualGramos + " / " + dispensador.CapacidadGramos + " g";
 
+            int porcentajeNivel = 0;
+
+            if (dispensador.CapacidadGramos > 0)
+            {
+                porcentajeNivel = (dispensador.NivelActualGramos * 100) / dispensador.CapacidadGramos;
+            }
+
+            literalBarraNivel.Text = "<div class=\"barra-progreso\"><div class=\"barra-progreso-relleno\" style=\"width:" +
+                porcentajeNivel + "%\"></div></div>";
+
             if (dispensador.Conectado)
             {
-                literalConectado.Text = "Si";
+                literalConectado.Text = "<span class=\"insignia insignia-exito\">Conectado</span>";
             }
             else
             {
-                literalConectado.Text = "No";
+                literalConectado.Text = "<span class=\"insignia insignia-error\">Desconectado</span>";
             }
 
             literalBateria.Text = dispensador.BateriaPorcentaje + "%";
