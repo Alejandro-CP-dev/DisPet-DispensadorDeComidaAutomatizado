@@ -69,13 +69,25 @@ namespace DisPet
                 fila.NombreMascota = mascota.Nombre;
                 fila.Hora = horario.Hora;
                 fila.CantidadGramos = horario.CantidadGramos;
-                fila.DiasTexto = string.Join(",", horario.Dias);
+                fila.DiasTexto = ConstruirChipsDeDias(horario.Dias);
 
                 filas.Add(fila);
             }
 
             listaHorarios.DataSource = filas;
             listaHorarios.DataBind();
+        }
+
+        private string ConstruirChipsDeDias(List<string> dias)
+        {
+            string html = "";
+
+            foreach (string dia in dias)
+            {
+                html += "<span class=\"insignia insignia-neutral\" style=\"margin-right:4px;\">" + dia + "</span>";
+            }
+
+            return html;
         }
 
         private void LimpiarFormulario()

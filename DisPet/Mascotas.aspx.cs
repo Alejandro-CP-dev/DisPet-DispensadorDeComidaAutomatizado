@@ -50,6 +50,26 @@ namespace DisPet
             literalTituloFormulario.Text = "Nueva mascota";
         }
 
+        protected void listaMascotas_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType != DataControlRowType.DataRow)
+            {
+                return;
+            }
+
+            Mascota mascota = (Mascota)e.Row.DataItem;
+            Literal literalEspecie = (Literal)e.Row.FindControl("literalEspecie");
+
+            if (mascota.Especie == "Perro")
+            {
+                literalEspecie.Text = "<span class=\"insignia insignia-info\">Perro</span>";
+            }
+            else
+            {
+                literalEspecie.Text = "<span class=\"insignia insignia-warning\">Gato</span>";
+            }
+        }
+
         protected void listaMascotas_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             int idMascota = int.Parse((string)e.CommandArgument);

@@ -3,24 +3,94 @@
 <html>
 <head runat="server">
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>DISPET</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='80'%3E%F0%9F%90%BE%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="~/Estilos/Site.css" />
 </head>
 <body>
     <form id="formPrincipal" runat="server">
-        <div class="encabezado">
-            <h1>DISPET</h1>
-            <div class="menu">
-                <a href="~/Tablero.aspx" runat="server">Tablero</a>
-                <a href="~/Mascotas.aspx" runat="server">Mascotas</a>
-                <a href="~/Horarios.aspx" runat="server">Horarios</a>
-                <a href="~/Historial.aspx" runat="server">Historial</a>
-                <asp:LinkButton ID="botonCerrarSesion" runat="server" OnClick="botonCerrarSesion_Click">Cerrar sesion (<asp:Literal ID="literalUsuario" runat="server" />)</asp:LinkButton>
+        <div class="app-shell">
+            <div class="fondo-sidebar" id="fondoSidebar"></div>
+
+            <aside class="sidebar" id="barraLateral">
+                <div class="sidebar-marca">
+                    <div class="icono-marca">🐾</div>
+                    <div class="texto-marca">DISPET<small>Panel de control</small></div>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <a id="enlaceTablero" runat="server" class="enlace-nav" href="~/Tablero.aspx">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /></svg>
+                        Tablero
+                    </a>
+                    <a id="enlaceMascotas" runat="server" class="enlace-nav" href="~/Mascotas.aspx">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.7-4.35-9.1-8.6C1.3 9 2.9 5.4 6.5 5.4c2 0 3.3 1.2 4 2.3.7-1.1 2-2.3 4-2.3 3.6 0 5.2 3.6 3.6 7C19.7 16.65 12 21 12 21z" /></svg>
+                        Mascotas
+                    </a>
+                    <a id="enlaceHorarios" runat="server" class="enlace-nav" href="~/Horarios.aspx">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3.2 2" /></svg>
+                        Horarios
+                    </a>
+                    <a id="enlaceHistorial" runat="server" class="enlace-nav" href="~/Historial.aspx">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.8-6.5" /><path d="M3 4.5V9h4.5" /><path d="M12 7.5v5l3.3 1.9" /></svg>
+                        Historial
+                    </a>
+                </nav>
+
+                <div class="sidebar-pie">
+                    <div class="usuario-chip">
+                        <div class="usuario-avatar"><asp:Literal ID="literalIniciales" runat="server" /></div>
+                        <div class="usuario-nombre"><asp:Literal ID="literalUsuario" runat="server" /></div>
+                    </div>
+                    <asp:LinkButton ID="botonCerrarSesion" runat="server" CssClass="enlace-salir" OnClick="botonCerrarSesion_Click">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><path d="M16 17l5-5-5-5" /><path d="M21 12H9" /></svg>
+                        Cerrar sesion
+                    </asp:LinkButton>
+                </div>
+            </aside>
+
+            <div class="area-principal">
+                <header class="barra-superior">
+                    <button type="button" class="boton-menu-movil" id="botonMenuMovil" aria-label="Abrir menu">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
+                    </button>
+                    <div class="barra-superior-texto">
+                        <h1><asp:ContentPlaceHolder ID="tituloPagina" runat="server" /></h1>
+                        <p class="barra-superior-subtitulo"><asp:ContentPlaceHolder ID="subtituloPagina" runat="server" /></p>
+                    </div>
+                    <div class="barra-superior-acciones">
+                        <asp:ContentPlaceHolder ID="accionesPagina" runat="server" />
+                    </div>
+                </header>
+                <main class="contenido">
+                    <asp:ContentPlaceHolder ID="contenidoPrincipal" runat="server" />
+                </main>
             </div>
         </div>
-        <div class="contenido">
-            <asp:ContentPlaceHolder ID="contenidoPrincipal" runat="server" />
-        </div>
     </form>
+
+    <script type="text/javascript">
+        (function () {
+            var boton = document.getElementById('botonMenuMovil');
+            var barraLateral = document.getElementById('barraLateral');
+            var fondo = document.getElementById('fondoSidebar');
+
+            function cerrarMenu() {
+                barraLateral.classList.remove('abierta');
+                fondo.classList.remove('visible');
+            }
+
+            function alternarMenu() {
+                barraLateral.classList.toggle('abierta');
+                fondo.classList.toggle('visible');
+            }
+
+            if (boton) { boton.addEventListener('click', alternarMenu); }
+            if (fondo) { fondo.addEventListener('click', cerrarMenu); }
+        })();
+    </script>
 </body>
 </html>
