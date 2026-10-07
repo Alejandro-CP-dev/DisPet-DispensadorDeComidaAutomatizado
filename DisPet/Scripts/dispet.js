@@ -1,14 +1,14 @@
 // ============================================================
-// DISPET — Pagina de producto
+// DISPET — Pagina de producto (landing)
 // JavaScript vanilla (sin librerias externas). Se organiza en
 // pequenas funciones, una por comportamiento, y todas se
 // arrancan al final del archivo cuando el HTML ya cargo.
 //
 // Indice:
-//   1. iniciarNavegacion()      -> fondo de la barra + menu movil
-//   2. iniciarParallaxHero()    -> mueve la imagen del hero al hacer scroll
-//   3. iniciarRevelado()        -> aparece el contenido con IntersectionObserver
-//   4. iniciarSelectorMascota() -> alterna la imagen perro/gato
+//   1. iniciarNavegacion()        -> fondo de la barra y menu movil
+//   2. iniciarTema()              -> alterna claro/oscuro y lo recuerda
+//   3. iniciarRevelado()          -> aparece el contenido con IntersectionObserver
+//   4. iniciarSelectorMascota()   -> alterna la imagen perro/gato
 // ============================================================
 
 (function () {
@@ -23,29 +23,29 @@
     // 1. Barra de navegacion
     // ------------------------------------------------------------
     function iniciarNavegacion() {
-        var nav = document.getElementById("nav");
+        var nav = document.getElementById("navLanding");
         if (!nav) { return; }
 
-        // Le agregamos fondo solido a la barra solo despues de
-        // haber bajado unos pixeles, para que arranque transparente
-        // sobre el hero.
+        // Le agregamos fondo solido a la barra solo despues de haber
+        // bajado unos pixeles, para que arranque oscura y transparente
+        // sobre el hero (ver .landing-nav.con-scroll en Site.css).
         function alHacerScroll() {
             if (window.scrollY > 10) {
-                nav.classList.add("nav-con-fondo");
+                nav.classList.add("con-scroll");
             } else {
-                nav.classList.remove("nav-con-fondo");
+                nav.classList.remove("con-scroll");
             }
         }
         window.addEventListener("scroll", alHacerScroll, { passive: true });
         alHacerScroll();
 
-        // Menu hamburguesa para celular: un clic muestra u oculta
-        // la lista de enlaces.
-        var botonMenu = document.getElementById("botonMenu");
-        var menuMovil = document.getElementById("menuMovil");
+        // Menu hamburguesa para celular: un clic muestra u oculta la
+        // lista de enlaces debajo del nav.
+        var botonMenu = document.getElementById("botonMenuLanding");
+        var menuMovil = document.getElementById("menuLandingMovil");
         if (botonMenu && menuMovil) {
             botonMenu.addEventListener("click", function () {
-                var abierto = menuMovil.classList.toggle("nav-abierto");
+                var abierto = menuMovil.classList.toggle("abierta");
                 botonMenu.setAttribute("aria-expanded", abierto ? "true" : "false");
             });
         }
@@ -53,42 +53,33 @@
 
 
     // ------------------------------------------------------------
-    // 2. Parallax de la imagen del hero
+    // 2. Tema claro / oscuro
     //
-    // Cada vez que el usuario hace scroll, movemos la imagen con
-    // CSS transform usando un factor menor a 1 (0.25). Como la
-    // imagen se mueve mas lento que el resto de la pagina, se ve
-    // un efecto de profundidad.
-    //
-    // Usamos requestAnimationFrame para no recalcular el estilo en
-    // cada pixel de scroll (que dispara el evento muchas veces por
-    // segundo), sino una sola vez por cuadro de animacion.
+    // El atributo data-tema en <html> es lo que Site.css lee para
+    // repintar los colores de la landing (ver html[data-tema="oscuro"]
+    // .landing en Site.css). Ya se aplico una vez "en caliente" desde
+    // un script en el <head> de Default.aspx, para evitar el parpadeo;
+    // aqui solo conectamos el boton y guardamos la preferencia.
     // ------------------------------------------------------------
-    function iniciarParallaxHero() {
-        var imagenHero = document.getElementById("heroImagen");
-        if (!imagenHero) { return; }
+    function iniciarTema() {
+        var boton = document.getElementById("botonTema");
+        if (!boton) { return; }
 
-        // Si el usuario prefiere menos movimiento, dejamos la
-        // imagen quieta y no enganchamos el evento de scroll.
-        if (prefiereMenosMovimiento) { return; }
+        var CLAVE_GUARDADO = "dispet-tema";
 
-        var actualizacionPendiente = false;
-        var factorParallax = 0.25;
+        boton.addEventListener("click", function () {
+            var esOscuroAhora = document.documentElement.getAttribute("data-tema") === "oscuro";
+            var nuevoTema = esOscuroAhora ? "claro" : "oscuro";
 
-        function moverImagen() {
-            var desplazamiento = window.scrollY;
-            imagenHero.style.transform = "translateY(" + (desplazamiento * factorParallax) + "px)";
-            actualizacionPendiente = false;
-        }
+            document.documentElement.setAttribute("data-tema", nuevoTema);
 
-        window.addEventListener("scroll", function () {
-            // Si ya hay un cuadro pedido, no pedimos otro: evita
-            // acumular trabajo si el scroll es muy rapido.
-            if (!actualizacionPendiente) {
-                actualizacionPendiente = true;
-                requestAnimationFrame(moverImagen);
+            try {
+                localStorage.setItem(CLAVE_GUARDADO, nuevoTema);
+            } catch (e) {
+                // localStorage no disponible (modo privado, etc.):
+                // el tema sigue funcionando, solo no se recuerda.
             }
-        }, { passive: true });
+        });
     }
 
 
@@ -143,21 +134,22 @@
     // ------------------------------------------------------------
     // 4. Selector de mascota (perro / gato)
     //
-    // Funciona igual que el selector de color de una pagina de
-    // producto: varios botones, cada uno con un atributo
-    // data-mascota. Al hacer clic, buscamos la imagen cuyo
-    // data-mascota coincide y la marcamos como "activa"; las
-    // demas pierden esa clase. El CSS se encarga de mostrar solo
-    // la imagen activa (ver seccion 7 de dispet.css).
+    // Varios botones, cada uno con un atributo data-especie. Al
+    // hacer clic, buscamos la imagen cuyo data-especie coincide y
+    // la marcamos como "activa"; las demas pierden esa clase (ver
+    // .imagen-producto en Site.css). Tambien actualizamos el texto
+    // y el color de la leyenda ("Mostrando la version para: ...").
     // ------------------------------------------------------------
     function iniciarSelectorMascota() {
-        var botones = document.querySelectorAll(".selector-boton");
-        var imagenes = document.querySelectorAll(".selector-imagen");
+        var botones = document.querySelectorAll(".selector-especie-opcion");
+        var imagenes = document.querySelectorAll(".imagen-producto");
+        var contenedor = document.getElementById("selectorMascotaContenedor");
+        var textoEspecie = document.getElementById("textoEspecieActiva");
         if (botones.length === 0) { return; }
 
         botones.forEach(function (boton) {
             boton.addEventListener("click", function () {
-                var mascotaElegida = boton.getAttribute("data-mascota");
+                var especieElegida = boton.getAttribute("data-especie");
 
                 // Actualizamos el estado visual de los botones.
                 botones.forEach(function (b) {
@@ -167,10 +159,17 @@
                 });
 
                 // Mostramos solo la imagen que corresponde a la
-                // mascota elegida.
+                // especie elegida.
                 imagenes.forEach(function (img) {
-                    img.classList.toggle("activa", img.getAttribute("data-mascota") === mascotaElegida);
+                    img.classList.toggle("activa", img.getAttribute("data-especie") === especieElegida);
                 });
+
+                if (contenedor) {
+                    contenedor.classList.toggle("es-gato", especieElegida === "gato");
+                }
+                if (textoEspecie) {
+                    textoEspecie.textContent = especieElegida;
+                }
             });
         });
     }
@@ -182,7 +181,7 @@
     // ------------------------------------------------------------
     document.addEventListener("DOMContentLoaded", function () {
         iniciarNavegacion();
-        iniciarParallaxHero();
+        iniciarTema();
         iniciarRevelado();
         iniciarSelectorMascota();
     });

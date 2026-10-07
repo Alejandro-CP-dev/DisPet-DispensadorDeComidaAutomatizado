@@ -53,8 +53,28 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 html, body {
     height: 100%;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-kibble);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
 }
 
 body {
@@ -87,6 +107,20 @@ a {
 
 .dato {
     font-family: var(--font-mono);
+}
+
+/* Utilidad "reveal": oculta y corre hacia abajo un elemento hasta que
+   dispet.js detecta (IntersectionObserver) que entro en pantalla y le
+   agrega .reveal-activo. */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s cubic-bezier(.22, 1, .36, 1), transform .7s cubic-bezier(.22, 1, .36, 1);
+}
+
+.reveal-activo {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* ------------------------------------------------------------
@@ -1197,55 +1231,69 @@ html[data-tema="oscuro"] .landing-nav.con-scroll {
     font-size: 13.5px;
 }
 
-/* Hero: escenario oscuro a pantalla completa. El dispensador 3D vive
-   como fondo persistente mientras el titular se desvanece al hacer
-   scroll y las piezas se separan (ver Scripts/dispet3d.js). */
+/* Boton hamburguesa del nav de landing: solo visible en movil (ver
+   media query mas abajo). Al hacer clic abre .landing-nav-movil. */
+.landing-nav-movil-boton {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, .22);
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.landing-nav-movil-boton svg {
+    width: 18px;
+    height: 18px;
+}
+
+.landing-nav.con-scroll .landing-nav-movil-boton {
+    border-color: var(--color-border);
+}
+
+.landing-nav-movil {
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 16px 14px 16px;
+    background-color: var(--color-ink);
+    border-top: 1px solid rgba(255, 255, 255, .1);
+}
+
+.landing-nav-movil.abierta {
+    display: flex;
+}
+
+.landing-nav-movil a {
+    padding: 12px 6px;
+    color: #f3ede1;
+    text-decoration: none;
+    font-size: 14.5px;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+
+.landing-nav-movil a:last-child {
+    border-bottom: none;
+}
+
+/* Hero: escenario oscuro de marca (mismo degradado "ink" que el panel
+   de Login). El prototipo del dispensador (PrototipoSinFondo.png) queda
+   como imagen de fondo detras del titulo, igual que una marca de agua. */
 
 .landing-hero {
     position: relative;
     background: var(--gradiente-ink);
 }
 
-.escena-3d-envoltorio.con-3d {
-    height: 300vh;
-}
-
-.escena-3d-pin {
+.landing-hero-titular {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    padding: 130px 24px 72px 24px;
-}
-
-.escena-3d-envoltorio.con-3d .escena-3d-pin {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    min-height: 100vh;
-    padding-top: 110px;
-    padding-bottom: 0;
-}
-
-.escena-3d-envoltorio.con-3d .escenario-producto-stage,
-.escena-3d-envoltorio.con-3d .escenario-producto-caption {
-    display: none;
-}
-
-.escena-3d-envoltorio:not(.con-3d) #canvas3d,
-.escena-3d-envoltorio:not(.con-3d) .etiqueta-parte,
-.escena-3d-envoltorio:not(.con-3d) .escena-3d-hint {
-    display: none;
-}
-
-#canvas3d {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
+    padding: 140px 24px 96px 24px;
 }
 
 .landing-hero-resplandor {
@@ -1257,7 +1305,21 @@ html[data-tema="oscuro"] .landing-nav.con-scroll {
     transform: translate(-50%, -50%);
     background: radial-gradient(circle, rgba(201, 122, 43, .28) 0%, rgba(201, 122, 43, .1) 42%, transparent 72%);
     pointer-events: none;
+    z-index: 0;
     animation: resplandorRespirar 9s ease-in-out infinite;
+}
+
+/* Imagen de fondo del hero: el prototipo del dispensador, grande y
+   centrado detras del texto. */
+.landing-hero-fondo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(70vw, 1120px);
+    opacity: .4;
+    pointer-events: none;
+    z-index: 1;
 }
 
 @keyframes resplandorRespirar {
@@ -1265,24 +1327,11 @@ html[data-tema="oscuro"] .landing-nav.con-scroll {
     50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
 }
 
-.landing-hero-velo {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    width: min(100%, 1100px);
-    height: 62%;
-    transform: translateX(-50%);
-    background: radial-gradient(ellipse 60% 100% at 50% 0%, rgba(20, 16, 12, .72) 0%, rgba(20, 16, 12, .42) 48%, transparent 78%);
-    pointer-events: none;
-    z-index: 1;
-}
-
 .landing-hero-overlay {
     position: relative;
     z-index: 2;
     max-width: 700px;
     margin: 0 auto;
-    padding: 0 24px;
     text-align: center;
     color: #f3ede1;
     animation: heroEntrada .9s cubic-bezier(.16, 1, .3, 1) backwards;
@@ -1335,8 +1384,8 @@ html[data-tema="oscuro"] .landing-nav.con-scroll {
     display: inline-flex;
     gap: 4px;
     padding: 4px;
-    background-color: rgba(255, 255, 255, .08);
-    border: 1px solid rgba(255, 255, 255, .16);
+    background-color: var(--color-paper);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-pill);
 }
 
@@ -1346,7 +1395,7 @@ html[data-tema="oscuro"] .landing-nav.con-scroll {
     font-family: inherit;
     font-size: 13.5px;
     font-weight: 600;
-    color: #d8ccb4;
+    color: var(--color-text-muted);
     padding: 9px 20px;
     border-radius: var(--radius-pill);
     cursor: pointer;
@@ -1354,7 +1403,7 @@ html[data-tema="oscuro"] .landing-nav.con-scroll {
 }
 
 .selector-especie-opcion:hover {
-    color: #ffffff;
+    color: var(--color-text);
 }
 
 .selector-especie-opcion.activa[data-especie="perro"] {
@@ -1367,70 +1416,16 @@ html[data-tema="oscuro"] .landing-nav.con-scroll {
     color: #ffffff;
 }
 
-.etiqueta-parte {
-    position: absolute;
-    left: var(--etiqueta-x, 50%);
-    top: var(--etiqueta-y, 50%);
-    transform: translate(-50%, -50%) translateY(6px);
-    max-width: 200px;
-    padding: 10px 14px;
-    background-color: rgba(24, 20, 15, .58);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, .14);
-    border-radius: var(--radius-md);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .3s ease, transform .3s ease;
-}
-
-.etiqueta-parte.visible {
-    opacity: 1;
-    transform: translate(-50%, -50%) translateY(0);
-}
-
-.etiqueta-parte-titulo {
-    display: block;
-    font-size: 12.5px;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 2px;
-}
-
-.etiqueta-parte-texto {
-    display: block;
-    font-size: 11.5px;
-    line-height: 1.4;
-    color: #c9bca4;
-}
-
-.escena-3d-hint {
-    position: absolute;
-    left: 50%;
-    bottom: 28px;
-    transform: translateX(-50%);
-    margin: 0;
-    font-family: var(--font-mono);
-    font-size: 11.5px;
-    color: #c9bca4;
-    opacity: .85;
-    z-index: 2;
-}
-
-.escena-3d-envoltorio.con-3d .escena-3d-hint {
-    transition: opacity .2s ease;
-}
-
-.escenario-producto-stage {
+.selector-mascota-vista {
     position: relative;
-    z-index: 2;
     display: grid;
     width: min(92vw, 560px);
-    margin: 28px auto 0 auto;
-    background-color: rgba(255, 255, 255, .05);
-    border: 1px solid rgba(255, 255, 255, .14);
+    margin: 32px auto 0 auto;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    padding: 24px;
-    overflow: hidden;
+    padding: 28px;
+    box-shadow: var(--shadow-sm);
 }
 
 .imagen-producto {
@@ -1451,21 +1446,30 @@ html[data-tema="oscuro"] .landing-nav.con-scroll {
 }
 
 .escenario-producto-caption {
-    position: relative;
-    z-index: 2;
     margin: 16px 0 0 0;
     text-align: center;
     font-size: 13px;
-    color: #a99c84;
+    color: var(--color-text-faint);
 }
 
 .escenario-producto-caption .dato {
-    color: #d8ccb4;
+    color: var(--color-text);
     font-weight: 600;
 }
 
-.escena-3d-envoltorio.es-gato .escenario-producto-caption .dato {
-    color: var(--color-gato);
+.selector-mascota-contenedor.es-gato .escenario-producto-caption .dato {
+    color: var(--color-gato-deep);
+}
+
+.selector-especie-envoltorio {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.landing-pasos-imagen {
+    margin: 56px auto 0 auto;
+    max-width: 900px;
 }
 
 /* Secciones generales */
@@ -1486,6 +1490,93 @@ html[data-tema="oscuro"] .landing-nav.con-scroll {
     font-size: clamp(26px, 3.4vw, 36px);
     letter-spacing: -0.01em;
     color: var(--color-heading);
+}
+
+/* Fondo decorativo de la seccion "elige a tu mascota": varias
+   croquetas regadas, apenas visibles, cada una a distinto tamano,
+   rotacion y posicion para que no se note que es la misma foto
+   repetida. La foto trae fondo blanco; mix-blend-mode:multiply lo
+   funde con el fondo de la seccion (en vez de recortar la imagen a
+   mano) tanto en tema claro como oscuro. Van con z-index:-1, asi que
+   donde haya tarjeta o texto solido encima quedan tapadas sin
+   ensuciar la lectura. */
+#mascota {
+    position: relative;
+    overflow: hidden;
+}
+
+.croqueta-flotante {
+    position: absolute;
+    z-index: -1;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+}
+
+.croqueta-flotante-1 {
+    top: 2%;
+    left: -3%;
+    width: min(14vw, 130px);
+    opacity: .18;
+    transform: rotate(-28deg);
+}
+
+.croqueta-flotante-2 {
+    top: 6%;
+    right: 4%;
+    width: min(16vw, 160px);
+    opacity: .16;
+    transform: rotate(22deg);
+}
+
+.croqueta-flotante-3 {
+    top: 50%;
+    right: -8%;
+    width: min(46vw, 460px);
+    opacity: .22;
+    transform: translateY(-50%) rotate(-14deg);
+}
+
+.croqueta-flotante-4 {
+    bottom: 4%;
+    left: -4%;
+    width: min(22vw, 220px);
+    opacity: .18;
+    transform: rotate(32deg);
+}
+
+.croqueta-flotante-5 {
+    bottom: 2%;
+    right: 10%;
+    width: min(13vw, 120px);
+    opacity: .16;
+    transform: rotate(-12deg);
+}
+
+.croqueta-flotante-6 {
+    top: 42%;
+    left: 2%;
+    width: min(15vw, 150px);
+    opacity: .14;
+    transform: rotate(10deg);
+}
+
+/* multiply oscurece contra un fondo oscuro (en vez de solo borrar el
+   blanco de la foto), asi que en tema oscuro aclaramos cada croqueta
+   antes de mezclarla para que siga siendo visible. */
+html[data-tema="oscuro"] .croqueta-flotante {
+    filter: brightness(2.6) saturate(.8);
+}
+
+html[data-tema="oscuro"] .croqueta-flotante-1,
+html[data-tema="oscuro"] .croqueta-flotante-2,
+html[data-tema="oscuro"] .croqueta-flotante-4,
+html[data-tema="oscuro"] .croqueta-flotante-5,
+html[data-tema="oscuro"] .croqueta-flotante-6 {
+    opacity: .3;
+}
+
+html[data-tema="oscuro"] .croqueta-flotante-3 {
+    opacity: .5;
 }
 
 /* Como funciona: pasos */
@@ -1575,6 +1666,7 @@ html[data-tema="oscuro"] .landing-nav.con-scroll {
 /* Rejilla de caracteristicas */
 
 .rejilla-caracteristicas {
+    margin-top: 56px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
@@ -1668,8 +1760,20 @@ html[data-tema="oscuro"] .landing-nav.con-scroll {
         display: none;
     }
 
-    .escena-3d-pin {
-        padding-top: 84px;
+    .landing-nav .boton-nav {
+        display: none;
+    }
+
+    .landing-nav-movil-boton {
+        display: inline-flex;
+    }
+
+    .landing-nav .boton-tema {
+        margin-left: auto;
+    }
+
+    .landing-hero-titular {
+        padding: 96px 20px 40px 20px;
     }
 
     .landing-hero-cta {
@@ -1699,35 +1803,12 @@ html[data-tema="oscuro"] .landing-nav.con-scroll {
         margin-top: 80px;
         padding: 64px 20px;
     }
-
-    .escena-3d-envoltorio.con-3d {
-        height: auto;
-    }
-
-    .escena-3d-envoltorio.con-3d .escena-3d-pin {
-        position: relative;
-        top: auto;
-        height: auto;
-        min-height: 0;
-        padding: 84px 24px 72px 24px;
-    }
-
-    .escena-3d-envoltorio.con-3d #canvas3d,
-    .escena-3d-envoltorio.con-3d .etiqueta-parte,
-    .escena-3d-envoltorio.con-3d .escena-3d-hint,
-    .escena-3d-envoltorio.con-3d .landing-hero-resplandor {
-        display: none;
-    }
-
-    .escena-3d-envoltorio.con-3d .escenario-producto-stage,
-    .escena-3d-envoltorio.con-3d .escenario-producto-caption {
-        display: block;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .imagen-producto,
-    .landing-nav {
+    .landing-nav,
+    .landing-nav-movil {
         transition: none;
     }
 
@@ -1737,29 +1818,5 @@ html[data-tema="oscuro"] .landing-nav.con-scroll {
 
     .landing-hero-resplandor {
         animation: none;
-    }
-
-    .escena-3d-envoltorio.con-3d {
-        height: auto;
-    }
-
-    .escena-3d-envoltorio.con-3d .escena-3d-pin {
-        position: relative;
-        top: auto;
-        height: auto;
-        min-height: 0;
-        padding: 84px 24px 72px 24px;
-    }
-
-    .escena-3d-envoltorio.con-3d #canvas3d,
-    .escena-3d-envoltorio.con-3d .etiqueta-parte,
-    .escena-3d-envoltorio.con-3d .escena-3d-hint,
-    .escena-3d-envoltorio.con-3d .landing-hero-resplandor {
-        display: none;
-    }
-
-    .escena-3d-envoltorio.con-3d .escenario-producto-stage,
-    .escena-3d-envoltorio.con-3d .escenario-producto-caption {
-        display: block;
     }
 }
