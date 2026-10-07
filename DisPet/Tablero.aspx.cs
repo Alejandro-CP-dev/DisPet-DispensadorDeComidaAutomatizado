@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using DisPet.Logica;
@@ -12,7 +13,8 @@ namespace DisPet
         protected Literal literalMensaje;
         protected Literal literalNombreDispensador;
         protected Literal literalNivel;
-        protected Literal literalBarraNivel;
+        protected Literal literalAnilloNivel;
+        protected Literal literalPorcentajeNivel;
         protected Literal literalConectado;
         protected Literal literalBateria;
         protected GridView listaHorariosHoy;
@@ -59,7 +61,7 @@ namespace DisPet
             }
 
             literalNombreDispensador.Text = dispensador.Nombre;
-            literalNivel.Text = dispensador.NivelActualGramos + " / " + dispensador.CapacidadGramos + " g";
+            literalNivel.Text = dispensador.NivelActualGramos + " g";
 
             int porcentajeNivel = 0;
 
@@ -68,8 +70,15 @@ namespace DisPet
                 porcentajeNivel = (dispensador.NivelActualGramos * 100) / dispensador.CapacidadGramos;
             }
 
-            literalBarraNivel.Text = "<div class=\"barra-progreso\"><div class=\"barra-progreso-relleno\" style=\"width:" +
-                porcentajeNivel + "%\"></div></div>";
+            const double radioAnillo = 86;
+            double circunferencia = 2 * Math.PI * radioAnillo;
+            double desplazamiento = circunferencia * (1 - (porcentajeNivel / 100.0));
+
+            literalAnilloNivel.Text = string.Format(CultureInfo.InvariantCulture,
+                "<circle class=\"dial-nivel-progreso\" cx=\"100\" cy=\"100\" r=\"{0}\" stroke-dasharray=\"{1:0.##}\" stroke-dashoffset=\"{2:0.##}\" />",
+                radioAnillo, circunferencia, desplazamiento);
+
+            literalPorcentajeNivel.Text = "de " + dispensador.CapacidadGramos + " g &middot; " + porcentajeNivel + "%";
 
             if (dispensador.Conectado)
             {
@@ -80,7 +89,8 @@ namespace DisPet
                 literalConectado.Text = "<span class=\"insignia insignia-error\">Desconectado</span>";
             }
 
-            literalBateria.Text = dispensador.BateriaPorcentaje + "%";
+            literalBateria.Text = "<div class=\"tarjeta-estado-valor\">" + dispensador.BateriaPorcentaje + "%</div>" +
+                "<div class=\"barra-progreso\"><div class=\"barra-progreso-relleno\" style=\"width:" + dispensador.BateriaPorcentaje + "%\"></div></div>";
         }
 
         private void CargarHorariosDeHoy()

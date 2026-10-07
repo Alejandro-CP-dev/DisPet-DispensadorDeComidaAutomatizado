@@ -1,0 +1,652 @@
+/* ============================================================
+   DISPET — Pagina de producto
+   Estilo inspirado en las paginas de producto de Apple:
+   mucho espacio en blanco, tipografia grande y animaciones
+   suaves que aparecen al hacer scroll.
+
+   Organizacion del archivo:
+   1. Variables globales (tokens de diseno)
+   2. Reinicio basico y estilos de texto
+   3. Movimiento reducido (accesibilidad)
+   4. Botones
+   5. Barra de navegacion
+   6. Seccion 1: Hero
+   7. Seccion 2: Selector de mascota
+   8. Seccion 3: Como funciona
+   9. Seccion 4: Control desde el celular + caracteristicas
+   10. CTA final
+   11. Pie de pagina
+   12. Animacion "reveal" (aparecer al hacer scroll)
+   13. Diseno responsive (mobile-first)
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   1. Variables globales
+   Centralizamos aqui los colores, la fuente y los tiempos de
+   animacion para no repetirlos por todo el archivo.
+   ------------------------------------------------------------ */
+:root {
+    --color-fondo: #ffffff;
+    --color-superficie: #f5f5f7;
+    --color-texto: #1d1d1f;
+    --color-texto-secundario: #6e6e73;
+    --color-borde: #e5e5e5;
+
+    /* Color de marca: el tono de la croqueta de DisPet */
+    --color-acento: #c97a2b;
+    --color-acento-oscuro: #9c5a1a;
+
+    /* Pila de fuentes del sistema: no se descarga nada, usa
+       la fuente que ya tiene instalada el sistema operativo */
+    --fuente-sistema: -apple-system, "SF Pro Display", "Inter", "Segoe UI", sans-serif;
+
+    --altura-nav: 64px;
+
+    /* Dos velocidades de transicion, ambas con una curva suave */
+    --transicion-rapida: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    --transicion-suave: 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* ------------------------------------------------------------
+   2. Reinicio basico
+   ------------------------------------------------------------ */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: var(--fuente-sistema);
+    color: var(--color-texto);
+    background-color: var(--color-fondo);
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+}
+
+p {
+    margin: 0;
+    color: var(--color-texto-secundario);
+    line-height: 1.6;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+}
+
+/* Todas las secciones numeradas comparten este ancho maximo
+   y este espaciado vertical, para que el ritmo de la pagina
+   sea consistente */
+.seccion {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 96px 24px;
+    text-align: center;
+}
+
+
+/* ------------------------------------------------------------
+   3. Movimiento reducido
+   Si la persona activo "reducir movimiento" en su sistema
+   operativo, apagamos animaciones y transiciones de todo el
+   sitio. El JavaScript revisa esta misma preferencia antes de
+   animar el scroll (ver dispet.js).
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+
+/* ------------------------------------------------------------
+   4. Botones
+   ------------------------------------------------------------ */
+.boton {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 28px;
+    border-radius: 980px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: transform var(--transicion-rapida), background-color var(--transicion-rapida);
+}
+
+.boton:active {
+    transform: scale(0.97);
+}
+
+.boton-relleno {
+    background-color: var(--color-acento);
+    color: #ffffff;
+}
+
+.boton-relleno:hover {
+    background-color: var(--color-acento-oscuro);
+}
+
+.boton-texto {
+    background: transparent;
+    color: var(--color-acento);
+}
+
+
+/* ------------------------------------------------------------
+   5. Barra de navegacion
+   Es "fixed" para quedar siempre visible arriba. Empieza
+   transparente y gana fondo cuando dispet.js detecta que el
+   usuario hizo scroll (clase .nav-con-fondo).
+   ------------------------------------------------------------ */
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background-color var(--transicion-rapida), border-color var(--transicion-rapida);
+}
+
+.nav-con-fondo {
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom-color: var(--color-borde);
+}
+
+.nav-contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: var(--altura-nav);
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.nav-marca {
+    font-size: 17px;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--color-texto);
+    flex-shrink: 0;
+}
+
+.nav-enlaces {
+    display: none;
+    gap: 28px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-enlaces a {
+    font-size: 14px;
+    text-decoration: none;
+    color: var(--color-texto);
+    opacity: 0.75;
+    transition: opacity var(--transicion-rapida);
+}
+
+.nav-enlaces a:hover {
+    opacity: 1;
+}
+
+.nav-boton {
+    display: none;
+    padding: 8px 18px;
+    font-size: 13px;
+}
+
+/* Boton "hamburguesa" para celular: tres lineas con CSS puro */
+.nav-hamburguesa {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.nav-hamburguesa span {
+    display: block;
+    height: 2px;
+    background-color: var(--color-texto);
+    border-radius: 2px;
+}
+
+/* Menu movil desplegable */
+.nav-enlaces-movil {
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 20px 16px 20px;
+    background-color: rgba(255, 255, 255, 0.97);
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.nav-enlaces-movil.nav-abierto {
+    display: flex;
+}
+
+.nav-enlaces-movil a {
+    padding: 12px 4px;
+    text-decoration: none;
+    color: var(--color-texto);
+    font-size: 15px;
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.nav-enlaces-movil a:last-child {
+    border-bottom: none;
+}
+
+
+/* ------------------------------------------------------------
+   6. Seccion 1: Hero
+   La imagen del prototipo (PrototipoSinFondo.png, sin el fondo
+   gris del estudio) queda como una capa detras del texto, con
+   position: absolute. El texto va encima con position: relative
+   y z-index mas alto. La imagen tiene el efecto "parallax":
+   dispet.js mueve su transform segun el scroll, asi se desplaza
+   un poco mas lento que la pagina.
+   ------------------------------------------------------------ */
+.hero {
+    position: relative;
+    min-height: 92vh;
+    padding-top: var(--altura-nav);
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Capa de fondo: ocupa toda la seccion, la imagen se apoya en
+   la parte de abajo para dejar la parte de arriba (donde va el
+   titulo) mas despejada. */
+.hero-imagen-fondo {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: min(58vw, 800px);
+    transform: translateX(-50%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.hero-imagen-fondo img {
+    width: 100%;
+    display: block;
+    /* will-change avisa al navegador que esta imagen va a
+       animarse, para que prepare la capa con anticipacion */
+    will-change: transform;
+}
+
+.hero-texto {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 64px 24px 0 24px;
+
+    /* Lavado blanco, suave y sin bordes: mas fuerte abajo (donde
+       el texto se cruza con la foto) y transparente arriba (donde
+       el titulo ya cae sobre pagina blanca). Deja la foto visible
+       a traves, pero asegura que el texto se siga leyendo. */
+    background: radial-gradient(ellipse 65% 75% at 50% 100%, rgba(255, 255, 255, .92) 0%, rgba(255, 255, 255, 0) 72%);
+}
+
+/* El titulo y el subtitulo quedan por encima de la foto, asi
+   que les agregamos una sombra blanca y difusa (sin color, sin
+   caja visible). Donde el texto cae sobre pagina blanca no se
+   nota; donde cae sobre el producto, lo separa lo suficiente
+   para que se siga leyendo. */
+.hero-titulo {
+    /* Tamano fluido: nunca menor a 2.5rem ni mayor a 6rem,
+       y crece con el ancho de la pantalla (7vw) entre medio */
+    font-size: clamp(2.5rem, 7vw, 6rem);
+    text-shadow: 0 2px 4px #ffffff, 0 0 40px #ffffff, 0 0 80px #ffffff;
+}
+
+.hero-subtitulo {
+    margin: 20px auto 0 auto;
+    max-width: 480px;
+    font-size: 18px;
+}
+
+.hero-acciones {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 32px;
+}
+
+
+/* ------------------------------------------------------------
+   7. Seccion 2: Selector de mascota
+   Funciona igual que el selector de color de un producto
+   Apple: un grupo de botones y una imagen grande que cambia
+   segun el boton elegido (logica en dispet.js).
+   ------------------------------------------------------------ */
+.selector-encabezado p {
+    margin-top: 10px;
+    font-size: 17px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.selector-vista {
+    position: relative;
+    margin-top: 48px;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--color-superficie);
+    border-radius: 24px;
+    padding: 32px;
+}
+
+.selector-imagen {
+    grid-area: 1 / 1;
+    width: 100%;
+    height: clamp(260px, 42vw, 420px);
+    object-fit: contain;
+    border-radius: 12px;
+
+    /* Las dos imagenes se apilan en la misma celda de grid y
+       se cruzan con opacity: la que esta "activa" se ve */
+    opacity: 0;
+    transition: opacity var(--transicion-suave);
+}
+
+.selector-vista {
+    display: grid;
+}
+
+.selector-imagen.activa {
+    opacity: 1;
+}
+
+.selector-opciones {
+    display: inline-flex;
+    gap: 6px;
+    margin-top: 28px;
+    padding: 5px;
+    background-color: var(--color-superficie);
+    border-radius: 980px;
+}
+
+.selector-boton {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border: none;
+    background: transparent;
+    border-radius: 980px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-texto-secundario);
+    cursor: pointer;
+    transition: background-color var(--transicion-rapida), color var(--transicion-rapida);
+}
+
+.selector-boton.activa {
+    background-color: #ffffff;
+    color: var(--color-texto);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.selector-punto {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.selector-punto-perro {
+    background-color: #c9974f;
+}
+
+.selector-punto-gato {
+    background-color: #d9a79e;
+}
+
+
+/* ------------------------------------------------------------
+   8. Seccion 3: Como funciona
+   ------------------------------------------------------------ */
+.funciona-pasos {
+    margin-top: 56px;
+    display: grid;
+    gap: 40px;
+    text-align: left;
+}
+
+.funciona-paso {
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.funciona-numero {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-acento);
+    margin-bottom: 10px;
+}
+
+.funciona-paso h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.funciona-paso p {
+    font-size: 15px;
+}
+
+.funciona-imagen {
+    margin-top: 64px;
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+
+/* ------------------------------------------------------------
+   9. Seccion 4: Control desde el celular + caracteristicas
+   Imagen real del telefono con la app abierta, seguida de tres
+   tarjetas que resumen los datos que muestra el tablero.
+   ------------------------------------------------------------ */
+.control-intro {
+    margin: 10px auto 0 auto;
+    max-width: 480px;
+    font-size: 17px;
+}
+
+.control-imagen {
+    margin: 48px auto 0 auto;
+    max-width: 900px;
+}
+
+.control-imagen img {
+    width: 100%;
+    border-radius: 24px;
+}
+
+.rejilla-caracteristicas {
+    margin-top: 56px;
+    display: grid;
+    gap: 20px;
+    text-align: left;
+}
+
+.caracteristica {
+    padding: 28px;
+    background-color: var(--color-superficie);
+    border-radius: 18px;
+}
+
+.caracteristica svg {
+    width: 22px;
+    height: 22px;
+    color: var(--color-acento);
+    margin-bottom: 16px;
+}
+
+.caracteristica h3 {
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.caracteristica p {
+    font-size: 14px;
+}
+
+
+/* ------------------------------------------------------------
+   10. CTA final
+   Franja oscura de cierre: un solo mensaje y una sola accion,
+   para terminar la pagina con una invitacion clara a entrar.
+   ------------------------------------------------------------ */
+.cta-final {
+    padding: 96px 24px;
+    text-align: center;
+    background-color: var(--color-texto);
+}
+
+.cta-final h2 {
+    color: #ffffff;
+    font-size: clamp(1.8rem, 4vw, 2.75rem);
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.cta-final p {
+    margin: 16px auto 32px auto;
+    max-width: 420px;
+    color: #a1a1a6;
+    font-size: 17px;
+}
+
+
+/* ------------------------------------------------------------
+   11. Pie de pagina
+   ------------------------------------------------------------ */
+.pie {
+    padding: 48px 24px;
+    text-align: center;
+}
+
+.pie-marca {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.pie p {
+    font-size: 13px;
+}
+
+.pie-copyright {
+    margin-top: 8px;
+    opacity: 0.7;
+}
+
+
+/* ------------------------------------------------------------
+   10. Animacion "reveal"
+   Estado inicial (oculto y corrido hacia abajo) de cualquier
+   elemento con la clase .reveal. Cuando dispet.js detecta con
+   IntersectionObserver que el elemento entro en pantalla, le
+   agrega la clase .reveal-activo y esta regla lo anima a su
+   posicion final.
+   ------------------------------------------------------------ */
+.reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity var(--transicion-suave), transform var(--transicion-suave);
+}
+
+.reveal-activo {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ------------------------------------------------------------
+   11. Diseno responsive (mobile-first)
+   Todo lo anterior es el estilo para celular. A partir de
+   aqui ampliamos para tablet (768px) y escritorio (1024px).
+   ------------------------------------------------------------ */
+@media (min-width: 768px) {
+    .nav-enlaces {
+        display: flex;
+    }
+
+    .nav-boton {
+        display: inline-flex;
+    }
+
+    .nav-hamburguesa {
+        display: none;
+    }
+
+    .nav-enlaces-movil {
+        display: none !important;
+    }
+
+    .funciona-pasos {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .funciona-paso {
+        max-width: none;
+        margin: 0;
+    }
+
+    .rejilla-caracteristicas {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .seccion {
+        padding: 128px 24px;
+    }
+
+    .hero-texto {
+        padding-top: 96px;
+    }
+}

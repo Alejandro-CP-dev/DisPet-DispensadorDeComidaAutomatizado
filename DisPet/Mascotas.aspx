@@ -5,6 +5,7 @@
 
     <asp:Literal ID="literalMensaje" runat="server" />
 
+    <div class="panel-maestro-detalle">
     <div class="tarjeta">
         <h3>Mis mascotas</h3>
         <asp:GridView ID="listaMascotas" runat="server" AutoGenerateColumns="false"
@@ -62,6 +63,7 @@
 
         <asp:Button ID="botonGuardar" runat="server" Text="Guardar" CssClass="boton" OnClick="botonGuardar_Click" />
         <asp:Button ID="botonCancelar" runat="server" Text="Cancelar" CssClass="boton boton-secundario" CausesValidation="false" OnClick="botonCancelar_Click" />
+    </div>
     </div>
 
 </asp:Content>
