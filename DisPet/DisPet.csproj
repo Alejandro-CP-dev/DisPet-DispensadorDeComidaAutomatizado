@@ -69,6 +69,13 @@
   <ItemGroup>
     <Content Include="Images\dipetCan.jpeg" />
     <Content Include="Images\dispetCat.jpeg" />
+    <Content Include="Images\Prototipo.jpg" />
+    <Content Include="Images\PrototipoSinFondo.png" />
+    <Content Include="Images\CanPet.jpg" />
+    <Content Include="Images\CatPet.jpg" />
+    <Content Include="Images\PerroDispet.jpg" />
+    <Content Include="Images\Style.jpg" />
+    <Content Include="Images\Mobile.jpg" />
     <Content Include="Web.config" />
     <Content Include="Default.aspx" />
     <Content Include="Login.aspx" />
@@ -78,8 +85,8 @@
     <Content Include="Horarios.aspx" />
     <Content Include="Historial.aspx" />
     <Content Include="Estilos\Site.css" />
-    <Content Include="Scripts\dispet3d.js" />
-    <Content Include="Scripts\three.min.js" />
+    <Content Include="Content\dispet.css" />
+    <Content Include="Scripts\dispet.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
