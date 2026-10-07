@@ -4,11 +4,11 @@
 <asp:Content ID="contenido" ContentPlaceHolderID="contenidoPrincipal" runat="server">
 
     <div class="tarjeta">
-        <asp:GridView ID="listaHistorial" runat="server" AutoGenerateColumns="false"
+        <asp:GridView ID="listaHistorial" runat="server" AutoGenerateColumns="false" CssClass="tabla-historial"
             OnRowDataBound="listaHistorial_RowDataBound">
             <Columns>
+                <asp:BoundField DataField="FechaHora" HeaderText="Fecha y hora" DataFormatString="{0:dd/MM/yyyy HH:mm}" ItemStyle-CssClass="col-hora" />
                 <asp:BoundField DataField="NombreMascota" HeaderText="Mascota" />
-                <asp:BoundField DataField="FechaHora" HeaderText="Fecha y hora" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
                 <asp:BoundField DataField="CantidadGramos" HeaderText="Gramos" />
                 <asp:TemplateField HeaderText="Tipo">
                     <ItemTemplate>
