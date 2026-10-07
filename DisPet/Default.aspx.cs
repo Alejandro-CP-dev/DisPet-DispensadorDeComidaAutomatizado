@@ -6,11 +6,7 @@ namespace DisPet
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["IdUsuario"] == null)
-            {
-                Response.Redirect("~/Login.aspx");
-            }
-            else
+            if (Session["IdUsuario"] != null)
             {
                 Response.Redirect("~/Tablero.aspx");
             }
