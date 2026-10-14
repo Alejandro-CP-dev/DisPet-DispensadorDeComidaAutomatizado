@@ -1,0 +1,125 @@
+/*
+ * Tokens de diseño de DisPet.
+ * Tema claro en :root. Tema oscuro por prefers-color-scheme (automático)
+ * o por [data-theme="dark"] / [data-theme="light"] (elección manual,
+ * ver shared/hooks/useTema.ts). Ningún color se escribe a mano en los
+ * componentes: siempre a través de estas variables.
+ */
+
+:root {
+  /* Superficies */
+  --surface-100: #fbf6ef;
+  --surface-200: #ffffff;
+  --surface-300: #f3e9db;
+  --borde: #e2d5c3;
+
+  /* Texto */
+  --ink-900: #2e2419;
+  --ink-600: #6a5a49;
+
+  /* Marca (ámbar) */
+  --marca-100: #f7e9cf;
+  --marca-500: #c78a33;
+  --marca-700: #8a5d18;
+
+  /* Acento "gato" */
+  --gato-400: #e0a294;
+  --gato-700: #9e4e3e;
+
+  /* Estado */
+  --exito: #2f6645;
+  --alerta: #9a6210;
+  --error: #9b3328;
+
+  /* Tipografía */
+  --fuente-titulo: 'Baloo 2', 'Segoe UI', system-ui, sans-serif;
+  --fuente-cuerpo: 'Inter', 'Segoe UI', system-ui, sans-serif;
+
+  --fs-hero: 56px;
+  --lh-hero: 56px;
+  --fs-seccion: 40px;
+  --lh-seccion: 44px;
+  --fs-titulo: 28px;
+  --lh-titulo: 34px;
+  --fs-subtitulo: 20px;
+  --lh-subtitulo: 30px;
+  --fs-cuerpo: 16px;
+  --lh-cuerpo: 26px;
+  --fs-pequeno: 14px;
+  --lh-pequeno: 22px;
+  --fs-etiqueta: 13px;
+  --lh-etiqueta: 18px;
+  --tracking-etiqueta: 0.08em;
+
+  /* Radios */
+  --radio-chico: 8px;
+  --radio-boton: 14px;
+  --radio-tarjeta: 24px;
+  --radio-pildora: 999px;
+
+  /* Espaciado (múltiplos de 4) */
+  --espacio-1: 4px;
+  --espacio-2: 8px;
+  --espacio-3: 12px;
+  --espacio-4: 16px;
+  --espacio-5: 20px;
+  --espacio-6: 24px;
+  --espacio-8: 32px;
+  --espacio-10: 40px;
+  --espacio-12: 48px;
+  --espacio-16: 64px;
+  --espacio-seccion: 96px;
+  --espacio-seccion-movil: 64px;
+
+  /* Sombra y transición compartidas */
+  --sombra-tarjeta: 0 4px 16px rgb(46 36 25 / 8%);
+  --transicion-base: 160ms ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --surface-100: #1e1a16;
+    --surface-200: #292320;
+    --surface-300: #352d27;
+    --borde: #413630;
+
+    --ink-900: #f5ede2;
+    --ink-600: #bca896;
+
+    --marca-100: #3a2e1c;
+    --marca-500: #e8a94a;
+    --marca-700: #e8a94a;
+
+    --gato-400: #ebb3a4;
+    --gato-700: #ebb3a4;
+
+    --exito: #6fbf8e;
+    --alerta: #f0c070;
+    --error: #f08c7e;
+
+    --sombra-tarjeta: 0 4px 16px rgb(0 0 0 / 32%);
+  }
+}
+
+:root[data-theme='dark'] {
+  --surface-100: #1e1a16;
+  --surface-200: #292320;
+  --surface-300: #352d27;
+  --borde: #413630;
+
+  --ink-900: #f5ede2;
+  --ink-600: #bca896;
+
+  --marca-100: #3a2e1c;
+  --marca-500: #e8a94a;
+  --marca-700: #e8a94a;
+
+  --gato-400: #ebb3a4;
+  --gato-700: #ebb3a4;
+
+  --exito: #6fbf8e;
+  --alerta: #f0c070;
+  --error: #f08c7e;
+
+  --sombra-tarjeta: 0 4px 16px rgb(0 0 0 / 32%);
+}
