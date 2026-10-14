@@ -59,6 +59,41 @@ src/
 
 Ver también `tsconfig.app.json`: el alias `@/` apunta a `src/`.
 
+## Pruebas
+
+Los tests viven junto a lo que prueban (`Boton.test.tsx` al lado de
+`Boton.tsx`, `LoginPage.test.tsx` al lado de `LoginPage.tsx`), no en una
+carpeta aparte: así se ve de inmediato qué componente o página no tiene
+cobertura. La carpeta `tests/` en la raíz solo tiene la infraestructura
+compartida:
+
+- `tests/setup.ts` — arranca un servidor MSW en Node (`src/mocks/servidor.ts`,
+  los mismos `handlers.ts` de la Fase 3) antes de todos los tests, y lo
+  resetea entre cada uno.
+- `tests/renderizar.tsx` — un `render` de Testing Library que ya envuelve
+  en `QueryClientProvider` y `MemoryRouter`, para no repetirlo en cada
+  prueba de una página. Se importa como `@tests/renderizar`.
+
+Qué cubre la suite:
+
+- **Componentes compartidos** (`src/shared/componentes/*/**.test.tsx`):
+  que `Boton` no dispare `onClick` si está `disabled` o `cargando`, que
+  `Campo`/`Select` asocien la etiqueta con su input y expongan el error
+  vía `aria-describedby`, que `Modal` cierre con Escape y enfoque su
+  contenido, que `LimiteDeError` capture el fallo y `Reintentar` lo
+  recupere.
+- **Formularios** (`LoginPage`, `RegistroPage`): cada caso de error de
+  Zod (campo vacío, correo inválido, contraseña corta, contraseñas que no
+  coinciden) y el camino feliz contra el mock de `/auth/login` real.
+- **Una página completa** (`MascotasPage`): lista, valida el alta y
+  confirma que la mascota nueva aparece en la tabla — de punta a punta,
+  con MSW respondiendo de verdad en vez de mockear `fetch`.
+
+```bash
+npm run test        # toda la suite, una vez
+npm run test:watch  # modo watch
+```
+
 ## Nota de seguridad
 
 `react-router-dom@6.30.6` (la última versión de la rama v6) tiene dos
