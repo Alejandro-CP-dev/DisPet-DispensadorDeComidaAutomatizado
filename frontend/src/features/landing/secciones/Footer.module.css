@@ -1,0 +1,62 @@
+.footer {
+  background-color: var(--ink-900);
+  color: var(--surface-100);
+  padding: var(--espacio-10) var(--espacio-6);
+}
+
+.contenido {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--espacio-10);
+}
+
+.marca {
+  max-width: 280px;
+}
+
+.logo {
+  height: 28px;
+  width: auto;
+  margin-bottom: var(--espacio-3);
+}
+
+.eslogan {
+  font-size: var(--fs-pequeno);
+  line-height: var(--lh-pequeno);
+  opacity: 0.8;
+}
+
+.columnas {
+  display: flex;
+  gap: var(--espacio-10);
+  flex-wrap: wrap;
+}
+
+.columna {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.tituloColumna {
+  font-size: var(--fs-etiqueta);
+  letter-spacing: var(--tracking-etiqueta);
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: var(--espacio-1);
+}
+
+.columna a {
+  color: var(--surface-100);
+  text-decoration: none;
+  font-size: var(--fs-pequeno);
+  opacity: 0.9;
+}
+
+.columna a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}

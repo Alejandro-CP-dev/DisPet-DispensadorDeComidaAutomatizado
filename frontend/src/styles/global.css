@@ -60,6 +60,36 @@ a {
   outline-offset: 2px;
 }
 
+/* El logo es trazo oscuro. Sobre --surface-* se invierte en tema oscuro. */
+.logo-sobre-superficie {
+  filter: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .logo-sobre-superficie {
+    filter: brightness(0) invert(1);
+  }
+}
+
+:root[data-theme='dark'] .logo-sobre-superficie {
+  filter: brightness(0) invert(1);
+}
+
+/* Sobre --ink-900, que se invierte al revés, el logo necesita lo opuesto. */
+.logo-sobre-ink {
+  filter: brightness(0) invert(1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .logo-sobre-ink {
+    filter: none;
+  }
+}
+
+:root[data-theme='dark'] .logo-sobre-ink {
+  filter: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
