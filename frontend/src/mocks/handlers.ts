@@ -1,17 +1,39 @@
 import { http, HttpResponse } from 'msw'
 
-import type { Dispensacion, Horario, Mascota } from '@/tipos'
+import type { Dispensacion, Horario, Mascota, Usuario } from '@/tipos'
 
-import { dispensaciones, dispositivos, horarios, mascotas } from './datos'
+import { dispensaciones, dispositivos, horarios, mascotas, usuario as usuarioDemo } from './datos'
 
 const URL_BASE = import.meta.env.VITE_API_URL
 const ruta = (camino: string) => `${URL_BASE}${camino}`
+const CONTRASENA_DEMO = 'dispet123'
 
 function generarId(prefijo: string): string {
   return `${prefijo}-${crypto.randomUUID().slice(0, 8)}`
 }
 
 export const handlers = [
+  http.post(ruta('/auth/login'), async ({ request }) => {
+    const cuerpo = (await request.json()) as { correo: string; contrasena: string }
+    if (cuerpo.correo !== usuarioDemo.correo || cuerpo.contrasena !== CONTRASENA_DEMO) {
+      return HttpResponse.json({ mensaje: 'Credenciales incorrectas.' }, { status: 401 })
+    }
+    return HttpResponse.json({ usuario: usuarioDemo, tokenAcceso: generarId('token') })
+  }),
+
+  http.post(ruta('/auth/registro'), async ({ request }) => {
+    const cuerpo = (await request.json()) as { nombre: string; correo: string }
+    const nuevoUsuario: Usuario = {
+      id: generarId('u'),
+      nombre: cuerpo.nombre,
+      correo: cuerpo.correo,
+    }
+    return HttpResponse.json(
+      { usuario: nuevoUsuario, tokenAcceso: generarId('token') },
+      { status: 201 },
+    )
+  }),
+
   http.get(ruta('/mascotas'), () => HttpResponse.json(mascotas)),
 
   http.post(ruta('/mascotas'), async ({ request }) => {

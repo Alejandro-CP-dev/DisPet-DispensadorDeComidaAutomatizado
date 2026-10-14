@@ -1,0 +1,44 @@
+.pagina {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espacio-6);
+  background-color: var(--surface-100);
+}
+
+.tarjeta {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-5);
+  padding: var(--espacio-8);
+  border-radius: var(--radio-tarjeta);
+  background-color: var(--surface-200);
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra-tarjeta);
+}
+
+.titulo {
+  font-size: var(--fs-titulo);
+  line-height: var(--lh-titulo);
+  text-align: center;
+}
+
+.errorServidor {
+  color: var(--error);
+  font-size: var(--fs-pequeno);
+  line-height: var(--lh-pequeno);
+}
+
+.pie {
+  text-align: center;
+  font-size: var(--fs-pequeno);
+  color: var(--ink-600);
+}
+
+.pie a {
+  color: var(--marca-700);
+  font-weight: 600;
+}
