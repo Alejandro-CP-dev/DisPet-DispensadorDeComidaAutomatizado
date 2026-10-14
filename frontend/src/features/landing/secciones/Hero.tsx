@@ -1,20 +1,26 @@
+import { useRef } from 'react'
+
+
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery'
 import { useScrollProgress } from '@/shared/hooks/useScrollProgress'
 import { cx } from '@/shared/utils/cx'
 
 import estilos from './Hero.module.css'
+import { useHuellasCursor } from './useHuellasCursor'
 
 function irAEscena() {
   document.getElementById('escena')?.scrollIntoView({ behavior: 'smooth' })
 }
 
 export function Hero() {
+  const refHero = useRef<HTMLElement>(null)
   const scrollY = useScrollProgress()
   const movimientoReducido = useMediaQuery('(prefers-reduced-motion: reduce)')
   const desplazamiento = movimientoReducido ? 0 : scrollY * 0.08
+  useHuellasCursor(refHero)
 
   return (
-    <section className={estilos.hero}>
+    <section className={estilos.hero} ref={refHero}>
       <img
         src="/img/perro.png"
         alt=""
@@ -28,7 +34,7 @@ export function Hero() {
         style={{ transform: `rotate(5deg) translateY(${String(-desplazamiento)}px)` }}
       />
 
-      <img src="/img/logo.png" alt="DisPet" className={cx(estilos.logo, 'logo-sobre-superficie')} />
+      <img src="/img/logo.png" alt="DisPet" className={cx(estilos.logo, 'logo-sobre-superficie')} />    
       <h1 className={estilos.titulo}>Tu mascota come a tiempo, estés donde estés</h1>
       <div className={estilos.acciones}>
         <button type="button" className={estilos.botonPrimario} onClick={irAEscena}>
