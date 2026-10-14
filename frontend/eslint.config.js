@@ -39,6 +39,15 @@ export default defineConfig(
     languageOptions: {
       globals: globals.node,
     },
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
+  {
+    files: ['**/*.test.{ts,tsx}'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
   },
   prettierConfig,
 )
