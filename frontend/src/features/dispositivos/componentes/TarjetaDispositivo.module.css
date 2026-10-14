@@ -1,0 +1,58 @@
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding: var(--espacio-5);
+  border-radius: var(--radio-tarjeta);
+  background-color: var(--surface-200);
+  border: 1px solid var(--borde);
+}
+
+.encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+}
+
+.nombre {
+  font-family: var(--fuente-titulo);
+  font-size: var(--fs-subtitulo);
+  line-height: var(--lh-subtitulo);
+}
+
+.insignias {
+  display: flex;
+  gap: var(--espacio-2);
+  flex-wrap: wrap;
+}
+
+.nivel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.nivelEtiqueta {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-pequeno);
+  color: var(--ink-600);
+}
+
+.barra {
+  height: 8px;
+  border-radius: var(--radio-pildora);
+  background-color: var(--surface-300);
+  overflow: hidden;
+}
+
+.relleno {
+  height: 100%;
+  background-color: var(--marca-500);
+  border-radius: var(--radio-pildora);
+}
+
+.rellenoBajo {
+  background-color: var(--alerta);
+}
