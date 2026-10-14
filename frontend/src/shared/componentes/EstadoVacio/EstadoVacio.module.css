@@ -1,0 +1,33 @@
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-3);
+  text-align: center;
+  padding: var(--espacio-12) var(--espacio-6);
+  color: var(--ink-600);
+}
+
+.icono {
+  color: var(--ink-600);
+}
+
+.iconoError {
+  color: var(--error);
+}
+
+.titulo {
+  font-size: var(--fs-subtitulo);
+  line-height: var(--lh-subtitulo);
+  color: var(--ink-900);
+}
+
+.descripcion {
+  max-width: 420px;
+  font-size: var(--fs-cuerpo);
+  line-height: var(--lh-cuerpo);
+}
+
+.accion {
+  margin-top: var(--espacio-2);
+}

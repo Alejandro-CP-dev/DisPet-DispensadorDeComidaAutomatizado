@@ -1,0 +1,30 @@
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-3);
+  text-align: center;
+  padding: var(--espacio-12) var(--espacio-6);
+}
+
+.titulo {
+  font-size: var(--fs-subtitulo);
+  line-height: var(--lh-subtitulo);
+  color: var(--ink-900);
+}
+
+.mensaje {
+  max-width: 420px;
+  color: var(--ink-600);
+}
+
+.boton {
+  margin-top: var(--espacio-2);
+  border: none;
+  border-radius: var(--radio-boton);
+  background-color: var(--marca-500);
+  color: var(--ink-900);
+  font-weight: 600;
+  padding: var(--espacio-3) var(--espacio-6);
+  cursor: pointer;
+}
