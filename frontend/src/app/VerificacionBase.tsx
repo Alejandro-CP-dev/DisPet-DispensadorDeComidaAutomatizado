@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { useTema } from '@/shared/hooks/useTema'
 
 import estilos from './VerificacionBase.module.css'
@@ -23,6 +25,8 @@ export function VerificacionBase() {
       >
         Cambiar a tema {siguienteTema}
       </button>
+      <Link to="/componentes">Ver componentes compartidos</Link>
+      <Link to="/login">Iniciar sesión</Link>
     </div>
   )
 }

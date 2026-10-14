@@ -1,0 +1,46 @@
+.envoltorio {
+  overflow-x: auto;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-tarjeta);
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-cuerpo);
+}
+
+.tabla th,
+.tabla td {
+  padding: var(--espacio-3) var(--espacio-4);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.tabla thead th {
+  font-size: var(--fs-etiqueta);
+  letter-spacing: var(--tracking-etiqueta);
+  text-transform: uppercase;
+  color: var(--ink-600);
+  background-color: var(--surface-300);
+  border-bottom: 1px solid var(--borde);
+}
+
+.tabla tbody tr:not(:last-child) td {
+  border-bottom: 1px solid var(--borde);
+}
+
+.alinearDerecha {
+  text-align: right;
+}
+
+.alinearCentro {
+  text-align: center;
+}
+
+.filaVacia td {
+  padding: var(--espacio-10);
+  text-align: center;
+  color: var(--ink-600);
+  white-space: normal;
+}

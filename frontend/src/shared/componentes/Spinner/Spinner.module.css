@@ -1,0 +1,37 @@
+.spinner {
+  display: inline-block;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  animation: girar 700ms linear infinite;
+}
+
+.chico {
+  width: 16px;
+  height: 16px;
+}
+
+.mediano {
+  width: 24px;
+  height: 24px;
+}
+
+.grande {
+  width: 40px;
+  height: 40px;
+  border-width: 3px;
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}

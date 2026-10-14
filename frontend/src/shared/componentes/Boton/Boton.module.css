@@ -1,0 +1,71 @@
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-2);
+  border: 1px solid transparent;
+  border-radius: var(--radio-boton);
+  font-family: var(--fuente-cuerpo);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform var(--transicion-base),
+    opacity var(--transicion-base);
+  white-space: nowrap;
+}
+
+.boton:active {
+  transform: translateY(1px);
+}
+
+.boton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+}
+
+/* Tamaños */
+.mediano {
+  padding: var(--espacio-3) var(--espacio-6);
+  font-size: var(--fs-cuerpo);
+}
+
+.chico {
+  padding: var(--espacio-2) var(--espacio-4);
+  font-size: var(--fs-pequeno);
+}
+
+/* Variantes */
+.primario {
+  background-color: var(--marca-500);
+  color: var(--ink-900);
+}
+
+.secundario {
+  background-color: var(--surface-200);
+  border-color: var(--borde);
+  color: var(--ink-900);
+}
+
+.fantasma {
+  background-color: transparent;
+  color: var(--marca-700);
+}
+
+.peligro {
+  background-color: var(--error);
+  color: var(--surface-200);
+}
+
+.cargando {
+  color: transparent;
+  position: relative;
+}
+
+.spinnerCargando {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

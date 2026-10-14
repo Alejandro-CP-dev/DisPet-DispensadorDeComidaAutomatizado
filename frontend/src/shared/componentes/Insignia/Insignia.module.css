@@ -1,0 +1,36 @@
+.insignia {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-1) var(--espacio-3);
+  border-radius: var(--radio-pildora);
+  border: 1px solid currentColor;
+  background-color: var(--surface-200);
+  font-size: var(--fs-pequeno);
+  line-height: var(--lh-pequeno);
+  font-weight: 600;
+}
+
+.punto {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentColor;
+  flex-shrink: 0;
+}
+
+.exito {
+  color: var(--exito);
+}
+
+.error {
+  color: var(--error);
+}
+
+.alerta {
+  color: var(--alerta);
+}
+
+.neutral {
+  color: var(--ink-600);
+}
