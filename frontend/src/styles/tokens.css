@@ -74,6 +74,12 @@
   /* Sombra y transición compartidas */
   --sombra-tarjeta: 0 4px 16px rgb(46 36 25 / 8%);
   --transicion-base: 160ms ease;
+
+  /* Lienzo cinematográfico: a propósito NO se invierte con el tema.
+     Para secciones tipo "Escena" o el muro de fotos, que siempre deben
+     verse oscuras para que el video/las fotos resalten. */
+  --escena-fondo: #2e2419;
+  --escena-texto: #fbf6ef;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -57,7 +57,7 @@
 .fondoDecorativo {
   position: absolute;
   bottom: -40px;
-  width: min(360px, 42vw);
+  width: min(860px, 580vw);
   height: auto;
   opacity: 0.9;
 }
