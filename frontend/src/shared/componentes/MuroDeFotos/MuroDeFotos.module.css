@@ -1,0 +1,117 @@
+.muro {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  perspective: var(--muro-perspectiva, 1200px);
+  perspective-origin: 50% 50%;
+  -webkit-mask-image:
+    radial-gradient(ellipse 78% 82% at 50% 46%, #000 var(--muro-borde), transparent 100%),
+    linear-gradient(to top, #000 var(--muro-borde), transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    radial-gradient(ellipse 78% 82% at 50% 46%, #000 var(--muro-borde), transparent 100%),
+    linear-gradient(to top, #000 var(--muro-borde), transparent 100%);
+  mask-composite: intersect;
+}
+
+.plano {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: row;
+  transform-style: preserve-3d;
+  transform-origin: 50% 50%;
+  cursor: pointer;
+  will-change: transform;
+}
+
+.columna {
+  position: relative;
+  width: calc(var(--muro-ancho) + var(--muro-espacio));
+  transform-style: preserve-3d;
+}
+
+.pista {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+.foto {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: calc(var(--muro-alto) + var(--muro-espacio));
+  flex: 0 0 auto;
+  transform-style: preserve-3d;
+  color: inherit;
+  text-decoration: none;
+}
+
+.interior {
+  position: absolute;
+  inset: calc(var(--muro-espacio) / 2);
+  display: block;
+  border-radius: var(--muro-radio);
+  overflow: hidden;
+  background-color: var(--escena-fondo);
+  opacity: var(--muro-atenuacion);
+  transform: translateZ(0);
+  pointer-events: none;
+  transition:
+    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(var(--muro-gris)) saturate(0.92);
+  transition: filter 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.superposicion {
+  position: absolute;
+  inset: 0;
+  background-color: var(--muro-superposicion);
+  opacity: 0.42;
+  pointer-events: none;
+  transition: opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.foto:hover .interior,
+.foto:focus-visible .interior {
+  opacity: 1;
+  transform: translateZ(var(--muro-elevacion));
+  box-shadow: 0 24px 60px -18px rgb(0 0 0 / 55%);
+}
+
+.foto:hover .imagen,
+.foto:focus-visible .imagen {
+  filter: grayscale(0) saturate(1.05);
+}
+
+.foto:hover .superposicion,
+.foto:focus-visible .superposicion {
+  opacity: 0;
+}
+
+.foto:focus-visible .interior {
+  outline: 2px solid var(--marca-500);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plano,
+  .pista {
+    will-change: auto;
+  }
+}

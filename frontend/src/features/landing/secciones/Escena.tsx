@@ -1,29 +1,23 @@
-import { useRef } from 'react'
+import { useCallback, useRef } from 'react'
 
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery'
 import { cx } from '@/shared/utils/cx'
 
 import estilos from './Escena.module.css'
-import { useVideoScrub } from './useVideoScrub'
+import { useImageSequenceScrub } from './useImageSequenceScrub'
+
+const TOTAL_FRAMES = 123
+const rutaFrame = (indice: number) =>
+  `/img/escena-frames/frame-${String(indice + 1).padStart(3, '0')}.webp`
 
 export function Escena() {
   const refContenedor = useRef<HTMLDivElement>(null)
-  const refVideo = useRef<HTMLVideoElement>(null)
+  const refCanvas = useRef<HTMLCanvasElement>(null)
   const movimientoReducido = useMediaQuery('(prefers-reduced-motion: reduce)')
-  const progreso = useVideoScrub(refContenedor, refVideo)
-
-  const video = (
-    <video
-      ref={refVideo}
-      className={estilos.video}
-      src="/video/escena.mp4"
-      muted
-      playsInline
-      preload="auto"
-      loop={movimientoReducido}
-      autoPlay={movimientoReducido}
-    />
-  )
+  const { progreso } = useImageSequenceScrub(refContenedor, refCanvas, {
+    totalFrames: TOTAL_FRAMES,
+    rutaFrame: useCallback((indice: number) => rutaFrame(indice), []),
+  })
 
   const panelQueEs = (
     <div className={cx(estilos.panel, estilos.panelIzquierda, progreso < 0.5 && estilos.visible)}>
@@ -48,7 +42,7 @@ export function Escena() {
   if (movimientoReducido) {
     return (
       <section id="escena" className={cx(estilos.escena, estilos.estatico)}>
-        {video}
+        <img className={estilos.video} src={rutaFrame(TOTAL_FRAMES - 1)} alt="" />
         {panelQueEs}
         {panelPorQue}
       </section>
@@ -58,7 +52,7 @@ export function Escena() {
   return (
     <section id="escena" ref={refContenedor} className={estilos.escena}>
       <div className={estilos.sticky}>
-        {video}
+        <canvas ref={refCanvas} className={estilos.video} />
         {panelQueEs}
         {panelPorQue}
       </div>
