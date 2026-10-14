@@ -10,10 +10,21 @@ if (!contenedor) {
   throw new Error('No se encontró el elemento #raiz en index.html')
 }
 
-createRoot(contenedor).render(
-  <StrictMode>
-    <Providers>
-      <Rutas />
-    </Providers>
-  </StrictMode>,
-)
+async function habilitarMocks(): Promise<void> {
+  if (import.meta.env.VITE_USAR_MOCKS !== 'true') return
+  const { worker } = await import('./mocks/browser')
+  await worker.start({ onUnhandledRequest: 'bypass' })
+}
+
+async function iniciar(raiz: HTMLElement): Promise<void> {
+  await habilitarMocks()
+  createRoot(raiz).render(
+    <StrictMode>
+      <Providers>
+        <Rutas />
+      </Providers>
+    </StrictMode>,
+  )
+}
+
+void iniciar(contenedor)
