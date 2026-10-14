@@ -1,0 +1,56 @@
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+}
+
+.encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-4);
+}
+
+.titulo {
+  font-size: var(--fs-titulo);
+  line-height: var(--lh-titulo);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--espacio-4);
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding: var(--espacio-5);
+  border-radius: var(--radio-tarjeta);
+  background-color: var(--surface-200);
+  border: 1px solid var(--borde);
+}
+
+.nombreMascota {
+  font-family: var(--fuente-titulo);
+  font-size: var(--fs-subtitulo);
+  line-height: var(--lh-subtitulo);
+}
+
+.detalle {
+  color: var(--ink-600);
+  font-size: var(--fs-pequeno);
+}
+
+.acciones {
+  display: flex;
+  gap: var(--espacio-3);
+  margin-top: var(--espacio-2);
+}
+
+.centro {
+  display: flex;
+  justify-content: center;
+  padding: var(--espacio-10) 0;
+}

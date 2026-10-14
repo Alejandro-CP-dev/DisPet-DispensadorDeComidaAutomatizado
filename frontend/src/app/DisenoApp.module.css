@@ -1,0 +1,121 @@
+.contenedor {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface-100);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-6);
+  padding: var(--espacio-3) var(--espacio-6);
+  background-color: var(--surface-200);
+  border-bottom: 1px solid var(--borde);
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  text-decoration: none;
+  color: var(--ink-900);
+}
+
+.icono {
+  height: 28px;
+  width: auto;
+}
+
+.nombre {
+  font-family: var(--fuente-titulo);
+  font-weight: 700;
+  font-size: var(--fs-subtitulo);
+}
+
+.nav {
+  display: flex;
+  gap: var(--espacio-2);
+  flex: 1;
+}
+
+.enlace {
+  padding: var(--espacio-2) var(--espacio-4);
+  border-radius: var(--radio-boton);
+  color: var(--ink-600);
+  text-decoration: none;
+  font-size: var(--fs-pequeno);
+  font-weight: 600;
+}
+
+.enlace:hover {
+  color: var(--ink-900);
+}
+
+.enlaceActivo {
+  background-color: var(--marca-100);
+  color: var(--marca-700);
+}
+
+.usuario {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+.nombreUsuario {
+  font-size: var(--fs-pequeno);
+  color: var(--ink-600);
+}
+
+.hamburguesa {
+  display: none;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-chico);
+  background-color: var(--surface-200);
+  color: var(--ink-900);
+  font-size: var(--fs-subtitulo);
+  line-height: 1;
+  padding: var(--espacio-2) var(--espacio-3);
+  cursor: pointer;
+}
+
+.contenido {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--espacio-8) var(--espacio-6);
+}
+
+@media (max-width: 768px) {
+  .hamburguesa {
+    display: block;
+  }
+
+  .nav {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: var(--espacio-1);
+    padding: var(--espacio-3);
+    background-color: var(--surface-200);
+    border-bottom: 1px solid var(--borde);
+    z-index: 40;
+  }
+
+  .navAbierto {
+    display: flex;
+  }
+
+  .nombreUsuario {
+    display: none;
+  }
+
+  .contenido {
+    padding: var(--espacio-6) var(--espacio-4);
+  }
+}
