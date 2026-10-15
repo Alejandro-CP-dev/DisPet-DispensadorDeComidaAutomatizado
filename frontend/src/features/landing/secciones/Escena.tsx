@@ -21,6 +21,9 @@ export function Escena() {
 
   const panelQueEs = (
     <div className={cx(estilos.panel, estilos.panelIzquierda, progreso < 0.5 && estilos.visible)}>
+      <span className={estilos.insignia}>
+        <img src="/img/mascota.png" alt="" />
+      </span>
       <h2>¿Qué es DisPet?</h2>
       <p>
         Un dispensador automático que programa las porciones de tu mascota por horario y gramos
@@ -31,6 +34,9 @@ export function Escena() {
 
   const panelPorQue = (
     <div className={cx(estilos.panel, estilos.panelDerecha, progreso >= 0.5 && estilos.visible)}>
+      <span className={estilos.insignia}>
+        <img src="/img/mascota.png" alt="" />
+      </span>
       <h2>¿Por qué DisPet?</h2>
       <p>
         Porque viajar, trabajar fuera o simplemente olvidarte un día no debería significar que tu

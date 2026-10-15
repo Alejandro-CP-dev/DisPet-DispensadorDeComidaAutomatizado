@@ -80,6 +80,14 @@
      verse oscuras para que el video/las fotos resalten. */
   --escena-fondo: #2e2419;
   --escena-texto: #fbf6ef;
+
+  /* Tarjeta de cristal clara sobre video/fotos: misma idea, tampoco se
+     invierte con el tema. Siempre texto oscuro sobre un fondo claro
+     traslúcido, para que se lea igual sobre cualquier frame del video. */
+  --escena-panel-fondo: rgb(251 246 239 / 82%);
+  --escena-panel-borde: rgb(255 255 255 / 45%);
+  --escena-panel-texto: #2e2419;
+  --escena-panel-texto-tenue: #6a5a49;
 }
 
 @media (prefers-color-scheme: dark) {
