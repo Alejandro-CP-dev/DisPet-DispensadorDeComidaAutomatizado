@@ -10,16 +10,17 @@ function crearGeneradorAleatorio(semilla: number): () => number {
 
 const aleatorio = crearGeneradorAleatorio(20240115)
 
-export const usuario: Usuario = {
-  id: 'u1',
-  nombre: 'Alejandro Tareas',
-  correo: 'alejandro@dispet.test',
-}
+export const usuario: Usuario = 
+  {
+    id: 'u1',
+    nombre: 'Alejandro Cardenas',
+    correo: 'alejandro@dispet.test',
+  }
 
 export const mascotas: Mascota[] = [
   {
     id: 'm1',
-    usuarioId: usuario.id,
+    usuarioId: 'u1',
     nombre: 'Luna',
     especie: 'perro',
     raza: 'Labrador',
@@ -27,7 +28,7 @@ export const mascotas: Mascota[] = [
   },
   {
     id: 'm2',
-    usuarioId: usuario.id,
+    usuarioId: 'u1',
     nombre: 'Simba',
     especie: 'gato',
     raza: 'Siamés',
@@ -38,7 +39,7 @@ export const mascotas: Mascota[] = [
 export const dispositivos: Dispositivo[] = [
   {
     id: 'd1',
-    usuarioId: usuario.id,
+    usuarioId: 'u1',
     mascotaId: 'm1',
     nombre: 'Dispensador sala',
     estadoConexion: 'conectado',
@@ -46,7 +47,7 @@ export const dispositivos: Dispositivo[] = [
   },
   {
     id: 'd2',
-    usuarioId: usuario.id,
+    usuarioId: 'u1',
     mascotaId: 'm2',
     nombre: 'Dispensador cocina',
     estadoConexion: 'desconectado',

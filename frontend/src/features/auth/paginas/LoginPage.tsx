@@ -8,6 +8,7 @@ import { obtenerMensajeError } from '@/shared/api/errores'
 import { Boton } from '@/shared/componentes/Boton'
 import { Campo } from '@/shared/componentes/Campo'
 
+import { PaginaAuth } from '../componentes/PaginaAuth/PaginaAuth'
 import { useLogin } from '../hooks'
 import { esquemaLogin } from '../schemas'
 import type { ValoresLogin } from '../schemas'
@@ -45,9 +46,11 @@ export function LoginPage() {
         : null
 
   return (
-    <div className={estilos.pagina}>
-      <form className={estilos.tarjeta} onSubmit={(evento) => void onSubmit(evento)} noValidate>
-        <h1 className={estilos.titulo}>Inicia sesión en DisPet</h1>
+    <PaginaAuth
+      titulo="Inicia sesión"
+      subtitulo="Entra para gestionar los horarios y porciones de tu mascota."
+    >
+      <form className={estilos.formulario} onSubmit={(evento) => void onSubmit(evento)} noValidate>
         <Campo
           label="Correo"
           type="email"
@@ -70,11 +73,13 @@ export function LoginPage() {
         <Boton type="submit" cargando={login.isPending}>
           Entrar
         </Boton>
-        <p className={estilos.ayuda}>Cuenta de prueba: alejandro@dispet.test / dispet123</p>
+        <p className={estilos.ayuda}>
+          <strong>Cuenta de prueba:</strong> alejandro@dispet.test / dispet123
+        </p>
         <p className={estilos.pie}>
           ¿No tienes cuenta? <Link to="/registro">Crea una</Link>
         </p>
       </form>
-    </div>
+    </PaginaAuth>
   )
 }
