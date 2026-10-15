@@ -1,29 +1,7 @@
-.pagina {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--espacio-6);
-  background-color: var(--surface-100);
-}
-
-.tarjeta {
-  width: 100%;
-  max-width: 400px;
+.formulario {
   display: flex;
   flex-direction: column;
   gap: var(--espacio-5);
-  padding: var(--espacio-8);
-  border-radius: var(--radio-tarjeta);
-  background-color: var(--surface-200);
-  border: 1px solid var(--borde);
-  box-shadow: var(--sombra-tarjeta);
-}
-
-.titulo {
-  font-size: var(--fs-titulo);
-  line-height: var(--lh-titulo);
-  text-align: center;
 }
 
 .errorServidor {
@@ -37,6 +15,14 @@
   line-height: var(--lh-pequeno);
   color: var(--ink-600);
   text-align: center;
+  padding: var(--espacio-3);
+  border-radius: var(--radio-chico);
+  background-color: var(--marca-100);
+  border: 1px dashed var(--marca-500);
+}
+
+.ayuda strong {
+  color: var(--ink-900);
 }
 
 .pie {

@@ -6,6 +6,7 @@ import { obtenerMensajeError } from '@/shared/api/errores'
 import { Boton } from '@/shared/componentes/Boton'
 import { Campo } from '@/shared/componentes/Campo'
 
+import { PaginaAuth } from '../componentes/PaginaAuth/PaginaAuth'
 import { useRegistro } from '../hooks'
 import { esquemaRegistro } from '../schemas'
 import type { ValoresRegistro } from '../schemas'
@@ -30,9 +31,8 @@ export function RegistroPage() {
   })
 
   return (
-    <div className={estilos.pagina}>
-      <form className={estilos.tarjeta} onSubmit={(evento) => void onSubmit(evento)} noValidate>
-        <h1 className={estilos.titulo}>Crea tu cuenta en DisPet</h1>
+    <PaginaAuth titulo="Crea tu cuenta" subtitulo="Empieza a cuidar a tu mascota desde hoy.">
+      <form className={estilos.formulario} onSubmit={(evento) => void onSubmit(evento)} noValidate>
         <Campo
           label="Nombre completo"
           autoComplete="name"
@@ -72,6 +72,6 @@ export function RegistroPage() {
           ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
         </p>
       </form>
-    </div>
+    </PaginaAuth>
   )
 }
