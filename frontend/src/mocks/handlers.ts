@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw'
 
 import type { Dispensacion, Horario, Mascota, Usuario } from '@/tipos'
 
-import { dispensaciones, dispositivos, horarios, mascotas, usuario as usuarioDemo } from './datos'
+import { dispensaciones, dispositivos, horarios, mascotas, usuario as usuarioDemo} from './datos'
 
 const URL_BASE = import.meta.env.VITE_API_URL
 const ruta = (camino: string) => `${URL_BASE}${camino}`
@@ -15,7 +15,7 @@ function generarId(prefijo: string): string {
 export const handlers = [
   http.post(ruta('/auth/login'), async ({ request }) => {
     const cuerpo = (await request.json()) as { correo: string; contrasena: string }
-    if (cuerpo.correo !== usuarioDemo.correo || cuerpo.contrasena !== CONTRASENA_DEMO) {
+    if (cuerpo.correo !==  usuarioDemo.correo || cuerpo.contrasena !== CONTRASENA_DEMO) {
       return HttpResponse.json({ mensaje: 'Credenciales incorrectas.' }, { status: 401 })
     }
     return HttpResponse.json({ usuario: usuarioDemo, tokenAcceso: generarId('token') })
