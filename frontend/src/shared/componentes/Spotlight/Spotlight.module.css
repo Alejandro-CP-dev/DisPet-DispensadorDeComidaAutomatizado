@@ -1,0 +1,13 @@
+.spotlight {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  border-radius: 9999px;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, var(--marca-500) 0%, transparent 72%);
+  filter: blur(48px);
+  transform: translate(-50%, -50%);
+  transition: opacity 200ms ease;
+}

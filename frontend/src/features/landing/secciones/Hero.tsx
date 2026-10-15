@@ -1,6 +1,8 @@
 import { useRef } from 'react'
 
-
+import { BotonMagnetico } from '@/shared/componentes/BotonMagnetico/BotonMagnetico'
+import { DestellosTexto } from '@/shared/componentes/DestellosTexto/DestellosTexto'
+import { Spotlight } from '@/shared/componentes/Spotlight/Spotlight'
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery'
 import { useScrollProgress } from '@/shared/hooks/useScrollProgress'
 import { cx } from '@/shared/utils/cx'
@@ -21,6 +23,7 @@ export function Hero() {
 
   return (
     <section className={estilos.hero} ref={refHero}>
+      <Spotlight />
       <img
         src="/img/perro.png"
         alt=""
@@ -34,15 +37,21 @@ export function Hero() {
         style={{ transform: `rotate(5deg) translateY(${String(-desplazamiento)}px)` }}
       />
 
-      <img src="/img/logo.png" alt="DisPet" className={cx(estilos.logo, 'logo-sobre-superficie')} />    
+      <DestellosTexto cantidad={10}>
+        <img
+          src="/img/logo.png"
+          alt="DisPet"
+          className={cx(estilos.logo, 'logo-sobre-superficie')}
+        />
+      </DestellosTexto>
       <h1 className={estilos.titulo}>Tu mascota come a tiempo, estés donde estés</h1>
       <div className={estilos.acciones}>
-        <button type="button" className={estilos.botonPrimario} onClick={irAEscena}>
+        <BotonMagnetico type="button" className={estilos.botonPrimario} onClick={irAEscena}>
           Ver la demo
-        </button>
-        <button type="button" className={estilos.botonSecundario} onClick={irAEscena}>
+        </BotonMagnetico>
+        <BotonMagnetico type="button" className={estilos.botonSecundario} onClick={irAEscena}>
           Cómo funciona
-        </button>
+        </BotonMagnetico>
       </div>
     </section>
   )

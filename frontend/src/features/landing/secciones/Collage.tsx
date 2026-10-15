@@ -49,21 +49,22 @@ export function Collage() {
 
   return (
     <section className={estilos.seccion}>
+      <MuroDeFotos
+        items={fotos}
+        columnas={esMovil ? 3 : 6}
+        anchoFoto={esMovil ? 140 : 325}
+        altoFoto={esMovil ? 96 : 132}
+        espacio={esMovil ? 12 : 10}
+        etiquetaGrupo="Fotos de mascotas usando DisPet"
+        className={estilos.muro}
+      />
       <div className={estilos.encabezado}>
-        <h2 className={estilos.titulo}>Mascotas felices, dueños tranquilos</h2>
-        <p className={estilos.subtitulo}>
-          Así se ve DisPet en el día a día: perros, gatos y la app que los conecta contigo.
-        </p>
-      </div>
-      <div className={estilos.muro}>
-        <MuroDeFotos
-          items={fotos}
-          columnas={esMovil ? 3 : 6}
-          anchoFoto={esMovil ? 140 : 325}
-          altoFoto={esMovil ? 96 : 132}
-          espacio={esMovil ? 12 : 10}
-          etiquetaGrupo="Fotos de mascotas usando DisPet"
-        />
+        <div className={estilos.panel}>
+          <h2 className={estilos.titulo}>Mascotas felices, dueños tranquilos</h2>
+          <p className={estilos.subtitulo}>
+            Así se ve DisPet en el día a día: perros, gatos y la app que los conecta contigo.
+          </p>
+        </div>
       </div>
     </section>
   )

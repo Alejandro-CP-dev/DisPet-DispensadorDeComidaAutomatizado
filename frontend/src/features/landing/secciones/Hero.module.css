@@ -10,14 +10,19 @@
   padding: calc(var(--espacio-16) * 2) var(--espacio-6) var(--espacio-16);
   text-align: center;
   background-color: var(--surface-100);
+  background-image:
+    linear-gradient(to bottom, rgb(20 16 12 / 45%), rgb(20 16 12 / 65%) 70%, rgb(20 16 12 / 85%)),
+    url('/img/backrgound-hero.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .logo {
-  width: min(280px, 60vw);
+  width: min(480px, 60vw);
   height: auto;
   z-index: 1;
 }
-
 
 .titulo {
   max-width: 720px;
@@ -57,19 +62,19 @@
 
 .fondoDecorativo {
   position: absolute;
-  bottom: -40px;
-  width: min(860px, 580vw);
+  bottom: 0px;
+  width: min(1460px, 90vw);
   height: auto;
   opacity: 0.9;
 }
 
 .perro {
-  left: -40px;
+  left: -400px;
   transform: rotate(-5deg);
 }
 
 .gato {
-  right: -40px;
+  right: -400px;
   transform: rotate(5deg);
 }
 

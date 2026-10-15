@@ -1,0 +1,30 @@
+.raiz {
+  position: relative;
+  display: inline-block;
+}
+
+.destello {
+  position: absolute;
+  pointer-events: none;
+  animation: destellar ease-in-out infinite;
+}
+
+@keyframes destellar {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .destello {
+    animation: none;
+    opacity: 0;
+  }
+}
