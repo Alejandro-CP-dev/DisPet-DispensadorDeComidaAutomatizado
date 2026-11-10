@@ -2,10 +2,10 @@ import { describe, expect, it } from 'vitest'
 
 import { obtenerMensajeError } from './errores'
 
-function crearErrorAxios(status?: number) {
+function crearErrorAxios(status?: number, data?: unknown) {
   return {
     isAxiosError: true,
-    response: status ? { status } : undefined,
+    response: status ? { status, data } : undefined,
   }
 }
 
@@ -24,6 +24,48 @@ describe('obtenerMensajeError', () => {
     expect(obtenerMensajeError(crearErrorAxios(503))).toBe(
       'Ocurrió un error en el servidor. Intenta de nuevo más tarde.',
     )
+  })
+
+  it('traduce el error de longitud del nombre devuelto por FastAPI', () => {
+    expect(
+      obtenerMensajeError(
+        crearErrorAxios(422, {
+          detail: [
+            {
+              loc: ['body', 'nombre'],
+              type: 'string_too_short',
+              msg: 'String should have at least 5 characters',
+            },
+          ],
+        }),
+      ),
+    ).toBe('El nombre debe tener entre 5 y 20 caracteres.')
+  })
+
+  it('traduce el error de contraseña numérica devuelto por FastAPI', () => {
+    expect(
+      obtenerMensajeError(
+        crearErrorAxios(422, {
+          detail: [
+            {
+              loc: ['body', 'contrasena'],
+              type: 'string_pattern_mismatch',
+              msg: 'String should match pattern',
+            },
+          ],
+        }),
+      ),
+    ).toBe('La contraseña no puede contener solo números.')
+  })
+
+  it('usa un mensaje neutro para errores 422 sin una traducción específica', () => {
+    expect(
+      obtenerMensajeError(
+        crearErrorAxios(422, {
+          detail: [{ loc: ['body', 'activo'], type: 'bool_parsing' }],
+        }),
+      ),
+    ).toBe('Uno o más datos no cumplen los requisitos.')
   })
 
   it('informa que no hay conexión cuando no hay respuesta', () => {

@@ -3,7 +3,16 @@ import { create } from 'zustand'
 
 import type { Usuario } from '@/tipos'
 
-import { iniciarSesion, registrarse } from './api'
+import {
+  actualizarPerfil,
+  cambiarContrasena,
+  confirmarCodigoCorreo,
+  iniciarSesion,
+  registrarse,
+  restablecerContrasena,
+  solicitarCodigoCorreo,
+  solicitarRecuperacion,
+} from './api'
 import type { Credenciales, DatosRegistro } from './types'
 
 interface EstadoSesion {
@@ -48,6 +57,52 @@ export function useRegistro() {
     onSuccess: (respuesta) => {
       establecerSesion(respuesta.usuario, respuesta.tokenAcceso)
     },
+  })
+}
+
+export function useActualizarPerfil() {
+  const establecerSesion = useSesionStore((estado) => estado.establecerSesion)
+  const tokenAcceso = useSesionStore((estado) => estado.tokenAcceso)
+
+  return useMutation({
+    mutationFn: actualizarPerfil,
+    onSuccess: (usuario) => {
+      if (tokenAcceso) establecerSesion(usuario, tokenAcceso)
+    },
+  })
+}
+
+export function useSolicitarCodigoCorreo() {
+  return useMutation({ mutationFn: solicitarCodigoCorreo })
+}
+
+export function useConfirmarCodigoCorreo() {
+  const establecerSesion = useSesionStore((estado) => estado.establecerSesion)
+  const tokenAcceso = useSesionStore((estado) => estado.tokenAcceso)
+
+  return useMutation({
+    mutationFn: confirmarCodigoCorreo,
+    onSuccess: (usuario) => {
+      if (tokenAcceso) establecerSesion(usuario, tokenAcceso)
+    },
+  })
+}
+
+export function useCambiarContrasena() {
+  return useMutation({
+    mutationFn: ({ actual, nueva }: { actual: string; nueva: string }) =>
+      cambiarContrasena(actual, nueva),
+  })
+}
+
+export function useSolicitarRecuperacion() {
+  return useMutation({ mutationFn: solicitarRecuperacion })
+}
+
+export function useRestablecerContrasena() {
+  return useMutation({
+    mutationFn: ({ token, contrasenaNueva }: { token: string; contrasenaNueva: string }) =>
+      restablecerContrasena(token, contrasenaNueva),
   })
 }
 

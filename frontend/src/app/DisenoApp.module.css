@@ -6,6 +6,9 @@
 }
 
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   display: flex;
   align-items: center;
   gap: var(--espacio-6);
@@ -57,6 +60,10 @@
   color: var(--marca-700);
 }
 
+.perfilMovil {
+  display: none;
+}
+
 .usuario {
   display: flex;
   align-items: center;
@@ -64,8 +71,43 @@
 }
 
 .nombreUsuario {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-2) var(--espacio-4);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-pildora);
+  background-color: var(--surface-300);
   font-size: var(--fs-pequeno);
-  color: var(--ink-600);
+  font-weight: 600;
+  color: var(--ink-900);
+  text-decoration: none;
+  box-shadow: var(--sombra-tarjeta);
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.nombreUsuario:hover {
+  background-color: var(--marca-100);
+  box-shadow: 0 6px 16px rgb(46 36 25 / 12%);
+  transform: translateY(-1px);
+}
+
+.nombreUsuario:focus-visible {
+  outline: 3px solid var(--marca-500);
+  outline-offset: 3px;
+}
+
+.nombreUsuario svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
 }
 
 .hamburguesa {
@@ -109,6 +151,10 @@
 
   .navAbierto {
     display: flex;
+  }
+
+  .perfilMovil {
+    display: block;
   }
 
   .nombreUsuario {

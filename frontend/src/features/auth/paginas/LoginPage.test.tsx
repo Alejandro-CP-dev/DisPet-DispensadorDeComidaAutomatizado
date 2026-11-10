@@ -36,16 +36,44 @@ describe('LoginPage', () => {
     expect(await screen.findByText('Ingresa un correo válido.')).toBeInTheDocument()
   })
 
+  it('permite visualizar y ocultar la contraseña', async () => {
+    const usuario = userEvent.setup()
+    renderizarLogin()
+
+    const campoContrasena = screen.getByLabelText('Contraseña')
+    expect(campoContrasena).toHaveAttribute('type', 'password')
+
+    await usuario.click(screen.getByRole('button', { name: 'Mostrar contraseña' }))
+    expect(campoContrasena).toHaveAttribute('type', 'text')
+
+    await usuario.click(screen.getByRole('button', { name: 'Ocultar contraseña' }))
+    expect(campoContrasena).toHaveAttribute('type', 'password')
+  })
+
   it('muestra un mensaje de credenciales incorrectas cuando el servidor rechaza el login', async () => {
     const usuario = userEvent.setup()
     renderizarLogin()
 
     await usuario.type(screen.getByLabelText('Correo'), 'alejandro@dispet.test')
-    await usuario.type(screen.getByLabelText('Contraseña'), 'contrasena-incorrecta')
+    await usuario.type(screen.getByLabelText('Contraseña'), 'clave-mala1')
     await usuario.click(screen.getByRole('button', { name: 'Entrar' }))
 
     expect(await screen.findByText('Correo o contraseña incorrectos.')).toBeInTheDocument()
   })
+
+  it.each(['123456789', 'corta123', 'contrasena-demasiado-larga'])(
+    'envía la contraseña %s y muestra credenciales incorrectas',
+    async (contrasena) => {
+      const usuario = userEvent.setup()
+      renderizarLogin()
+
+      await usuario.type(screen.getByLabelText('Correo'), 'alejandro@dispet.test')
+      await usuario.type(screen.getByLabelText('Contraseña'), contrasena)
+      await usuario.click(screen.getByRole('button', { name: 'Entrar' }))
+
+      expect(await screen.findByText('Correo o contraseña incorrectos.')).toBeInTheDocument()
+    },
+  )
 
   it('redirige al tablero con las credenciales correctas', async () => {
     const usuario = userEvent.setup()

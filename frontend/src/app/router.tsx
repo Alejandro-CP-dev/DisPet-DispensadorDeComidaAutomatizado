@@ -2,6 +2,8 @@ import { Route, Routes } from 'react-router-dom'
 
 import { LoginPage } from '@/features/auth/paginas/LoginPage'
 import { RegistroPage } from '@/features/auth/paginas/RegistroPage'
+import { RecuperarContrasenaPage } from '@/features/auth/paginas/RecuperarContrasenaPage'
+import { PerfilPage } from '@/features/auth/paginas/PerfilPage'
 import { DispositivosPage } from '@/features/dispositivos/paginas/DispositivosPage'
 import { HistorialPage } from '@/features/historial/paginas/HistorialPage'
 import { HorariosPage } from '@/features/horarios/paginas/HorariosPage'
@@ -20,6 +22,8 @@ export function Rutas() {
       <Route path="/componentes" element={<ComponentesShowcase />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registro" element={<RegistroPage />} />
+      <Route path="/recuperar-contrasena" element={<RecuperarContrasenaPage />} />
+      <Route path="/restablecer-contrasena" element={<RecuperarContrasenaPage />} />
       <Route element={<RutaProtegida />}>
         <Route element={<DisenoApp />}>
           <Route path="/tablero" element={<TableroPage />} />
@@ -27,6 +31,7 @@ export function Rutas() {
           <Route path="/dispositivos" element={<DispositivosPage />} />
           <Route path="/horarios" element={<HorariosPage />} />
           <Route path="/historial" element={<HistorialPage />} />
+          <Route path="/perfil" element={<PerfilPage />} />
         </Route>
       </Route>
     </Routes>

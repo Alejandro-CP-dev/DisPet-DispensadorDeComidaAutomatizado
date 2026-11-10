@@ -9,8 +9,14 @@ describe('MascotasPage', () => {
   it('muestra las mascotas existentes', async () => {
     renderizarConProveedores(<MascotasPage />)
 
-    expect(await screen.findByText('Luna')).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Luna' })).toBeInTheDocument()
     expect(screen.getByText('Simba')).toBeInTheDocument()
+    expect(screen.getByText('Labrador', { exact: false })).toBeInTheDocument()
+    expect(screen.getByText('22 kg')).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: 'Perro' })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: 'Gato' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Editar Luna' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Eliminar Luna' })).toBeInTheDocument()
   })
 
   it('valida el formulario de alta antes de llamar a la API', async () => {

@@ -1,8 +1,7 @@
 # DisPet — Frontend
 
-Plataforma de dispensadores automáticos de comida para mascotas controlados
-remotamente. Este paquete contiene únicamente el frontend; el backend se
-construirá después en Python con FastAPI.
+Plataforma web para gestionar dispensadores automáticos de comida para
+mascotas. El frontend se conecta al backend FastAPI o a MSW en modo demo.
 
 ## Stack
 
@@ -10,13 +9,28 @@ React 18 + TypeScript (estricto) + Vite · React Router v6 · TanStack Query ·
 Zustand · react-hook-form + Zod · CSS Modules · Vitest + Testing Library ·
 MSW · ESLint + Prettier.
 
-## Capa de datos simulada
+## Conexión con los datos
 
-Mientras no exista backend, toda la red se sirve con MSW (Mock Service
-Worker) a partir de `src/mocks/`. El cliente HTTP (`src/shared/api/cliente.ts`,
-Fase 3) siempre apunta a `VITE_API_URL`; cuando el backend de FastAPI esté
-listo, el único cambio necesario es actualizar esa variable de entorno y
-poner `VITE_USAR_MOCKS=false`. Ningún otro archivo debe tocarse.
+Por defecto, el frontend usa el backend FastAPI en `http://localhost:8000`;
+asegúrate de iniciar primero el backend y de mantener `VITE_USAR_MOCKS=false`
+en `.env` para que las cuentas y los cambios se guarden en PostgreSQL. El perfil
+de demostración permanece disponible después de cargar los datos de prueba del
+backend. Para volver al modo simulado, cambia `VITE_USAR_MOCKS=true`; ese modo
+usa MSW y no persiste cambios en PostgreSQL.
+
+## Funcionalidades añadidas
+
+- El tablero muestra consumo exitoso diario (7 días) y semanal (4 semanas)
+  por mascota, a partir del historial.
+- El historial filtra por mascota, estado y rango de fechas; permite descargar
+  todos los resultados filtrados en Excel, PDF o Word desde el backend.
+- Mi perfil permite editar datos personales, activar avisos de batería baja y
+  actualizaciones, y cambiar contraseña. El correo se cambia tras confirmar un
+  código enviado a la nueva dirección.
+- El registro, el inicio de sesión y las nuevas contraseñas exigen de 9 a 19
+  caracteres y al menos un carácter que no sea un número.
+- La recuperación envía un enlace de un solo uso por correo; requiere que el
+  backend tenga configurado SMTP en `backend/.env`.
 
 ## Cómo correr el proyecto
 
