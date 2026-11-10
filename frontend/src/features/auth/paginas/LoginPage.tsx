@@ -1,8 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import type { Location } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { obtenerMensajeError } from '@/shared/api/errores'
 import { Boton } from '@/shared/componentes/Boton'
@@ -15,10 +14,6 @@ import type { ValoresLogin } from '../schemas'
 
 import estilos from './LoginPage.module.css'
 
-interface EstadoNavegacionLogin {
-  desde?: Location
-}
-
 export function LoginPage() {
   const {
     register,
@@ -27,13 +22,11 @@ export function LoginPage() {
   } = useForm<ValoresLogin>({ resolver: zodResolver(esquemaLogin) })
   const login = useLogin()
   const navigate = useNavigate()
-  const location = useLocation()
 
   const onSubmit = handleSubmit((valores) => {
     login.mutate(valores, {
       onSuccess: () => {
-        const estado = location.state as EstadoNavegacionLogin | null
-        navigate(estado?.desde?.pathname ?? '/tablero', { replace: true })
+        navigate('/tablero', { replace: true })
       },
     })
   })
@@ -62,6 +55,7 @@ export function LoginPage() {
           label="Contraseña"
           type="password"
           autoComplete="current-password"
+          permitirVerContrasena
           error={errors.contrasena?.message}
           {...register('contrasena')}
         />
@@ -70,6 +64,9 @@ export function LoginPage() {
             {mensajeError}
           </p>
         )}
+        <p className={estilos.pie}>
+          <Link to="/recuperar-contrasena">¿Olvidaste tu contraseña?</Link>
+        </p>
         <Boton type="submit" cargando={login.isPending}>
           Entrar
         </Boton>

@@ -1,0 +1,31 @@
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-5);
+}
+
+.estado {
+  padding: var(--espacio-4);
+  border: 1px solid var(--borde);
+  border-left: 4px solid var(--exito);
+  border-radius: var(--radio-chico);
+  background-color: var(--surface-100);
+  color: var(--ink-900);
+}
+
+.ayuda {
+  color: var(--ink-600);
+  font-size: var(--fs-pequeno);
+  line-height: var(--lh-pequeno);
+  text-align: center;
+}
+
+.pie {
+  text-align: center;
+  font-size: var(--fs-pequeno);
+}
+
+.pie a {
+  color: var(--marca-700);
+  font-weight: 600;
+}

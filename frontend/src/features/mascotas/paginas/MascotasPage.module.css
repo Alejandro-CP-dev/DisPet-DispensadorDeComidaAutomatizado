@@ -27,30 +27,115 @@
   flex-direction: column;
   gap: var(--espacio-2);
   padding: var(--espacio-5);
+  border: 1px solid var(--borde);
   border-radius: var(--radio-tarjeta);
   background-color: var(--surface-200);
-  border: 1px solid var(--borde);
+  box-shadow: var(--sombra-tarjeta);
+}
+
+.encabezadoMascota {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-4);
+}
+
+.avatar {
+  display: block;
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar img {
+  display: block;
+  width: 200%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+
+.imagenGato {
+  transform: translateX(-50%);
 }
 
 .nombreMascota {
+  color: var(--ink-900);
   font-family: var(--fuente-titulo);
   font-size: var(--fs-subtitulo);
   line-height: var(--lh-subtitulo);
 }
 
 .detalle {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  margin: 0;
   color: var(--ink-600);
-  font-size: var(--fs-pequeno);
+  font-size: var(--fs-cuerpo);
+  line-height: var(--lh-cuerpo);
+}
+
+.detalle svg {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  color: var(--marca-700);
 }
 
 .acciones {
   display: flex;
   gap: var(--espacio-3);
-  margin-top: var(--espacio-2);
+  margin-top: auto;
+  padding-top: var(--espacio-2);
+}
+
+.tarjeta .botonEditar,
+.tarjeta .botonEliminar {
+  min-width: 0;
+  min-height: 40px;
+  flex: 1;
+  gap: var(--espacio-1);
+  padding: var(--espacio-2);
+  border-radius: var(--radio-pildora);
+  font-size: var(--fs-etiqueta);
+}
+
+.tarjeta .botonEditar {
+  border-color: var(--marca-500);
+  background-color: transparent;
+  color: var(--marca-700);
+}
+
+.tarjeta .botonEliminar {
+  border-color: var(--error);
+  background-color: var(--error);
+  color: var(--surface-200);
+}
+
+.acciones svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
 }
 
 .centro {
   display: flex;
   justify-content: center;
   padding: var(--espacio-10) 0;
+}
+
+@media (max-width: 480px) {
+  .encabezado {
+    align-items: flex-start;
+  }
+
+  .tarjeta {
+    padding: var(--espacio-4);
+  }
+
+  .acciones {
+    gap: var(--espacio-2);
+  }
 }

@@ -56,10 +56,31 @@ export function DisenoApp() {
               {enlace.etiqueta}
             </NavLink>
           ))}
+          <NavLink
+            to="/perfil"
+            className={({ isActive }) =>
+              cx(estilos.enlace, estilos.perfilMovil, isActive && estilos.enlaceActivo)
+            }
+            onClick={cerrarMenu}
+          >
+            Editar perfil
+          </NavLink>
         </nav>
 
         <div className={estilos.usuario}>
-          <span className={estilos.nombreUsuario}>{usuario?.nombre}</span>
+          <NavLink
+            to="/perfil"
+            className={estilos.nombreUsuario}
+            aria-label={`Editar perfil de ${usuario?.nombre ?? 'usuario'}`}
+            title="Editar perfil"
+          >
+            {usuario?.nombre}
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="10" cy="8" r="3.5" />
+              <path d="M3.5 19a6.5 6.5 0 0 1 11-4.6" />
+              <path d="m14.5 18.5 5.7-5.7 2 2-5.7 5.7-2.7.7.7-2.7Z" />
+            </svg>
+          </NavLink>
           <Boton variante="secundario" tamano="chico" onClick={cerrarSesion}>
             Cerrar sesión
           </Boton>

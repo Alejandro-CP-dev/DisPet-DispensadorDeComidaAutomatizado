@@ -10,12 +10,14 @@ function crearGeneradorAleatorio(semilla: number): () => number {
 
 const aleatorio = crearGeneradorAleatorio(20240115)
 
-export const usuario: Usuario = 
-  {
-    id: 'u1',
-    nombre: 'Alejandro Cardenas',
-    correo: 'alejandro@dispet.test',
-  }
+export const usuario: Usuario = {
+  id: 'u1',
+  nombre: 'Alejandro Cardenas',
+  correo: 'alejandro@dispet.test',
+  fechaCreacion: '2024-01-15T12:00:00.000Z',
+  notificacionBateriaBaja: false,
+  notificacionActualizaciones: false,
+}
 
 export const mascotas: Mascota[] = [
   {

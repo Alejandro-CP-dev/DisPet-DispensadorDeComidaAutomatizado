@@ -17,6 +17,7 @@
 }
 
 .input {
+  width: 100%;
   height: 44px;
   padding: 0 var(--espacio-4);
   border: 1px solid var(--borde);
@@ -25,6 +26,50 @@
   color: var(--ink-900);
   font-size: var(--fs-cuerpo);
   transition: border-color var(--transicion-base);
+}
+
+.entradaConControl {
+  position: relative;
+}
+
+.entradaConControl .input {
+  width: 100%;
+  padding-right: 48px;
+}
+
+.alternarVisibilidad {
+  position: absolute;
+  top: 50%;
+  right: var(--espacio-3);
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radio-chico);
+  background: transparent;
+  color: var(--ink-600);
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.alternarVisibilidad:hover {
+  color: var(--ink-900);
+}
+
+.alternarVisibilidad:focus-visible {
+  outline: 2px solid var(--marca-500);
+  outline-offset: 2px;
+}
+
+.alternarVisibilidad svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
 }
 
 .input::placeholder {

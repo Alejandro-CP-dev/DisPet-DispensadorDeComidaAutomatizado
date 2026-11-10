@@ -5,6 +5,8 @@ export interface FiltrosHistorial {
   porPagina: number
   estado?: EstadoDispensacion
   mascotaId?: string
+  desde?: string
+  hasta?: string
 }
 
 export interface RespuestaHistorial {

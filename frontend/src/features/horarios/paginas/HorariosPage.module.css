@@ -1,7 +1,7 @@
 .pagina {
   display: flex;
   flex-direction: column;
-  gap: var(--espacio-6);
+  gap: var(--espacio-5);
 }
 
 .encabezado {
@@ -16,13 +16,287 @@
   line-height: var(--lh-titulo);
 }
 
+.resumen {
+  margin-top: var(--espacio-1);
+  color: var(--ink-600);
+  font-size: var(--fs-pequeno);
+}
+
+.proximaComida {
+  display: flex;
+  min-height: 76px;
+  align-items: center;
+  gap: var(--espacio-4);
+  padding: var(--espacio-3) var(--espacio-5);
+  border: 1px solid var(--marca-500);
+  border-radius: var(--radio-tarjeta);
+  background: linear-gradient(100deg, var(--marca-100), var(--surface-200));
+}
+
+.reloj {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: var(--radio-boton);
+  object-fit: cover;
+}
+
+.detalleProxima {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.detalleProxima > span {
+  color: var(--marca-700);
+  font-size: var(--fs-etiqueta);
+  font-weight: 700;
+  letter-spacing: var(--tracking-etiqueta);
+  text-transform: uppercase;
+}
+
+.detalleProxima strong {
+  color: var(--ink-900);
+  font-size: var(--fs-cuerpo);
+  line-height: var(--lh-cuerpo);
+}
+
 .centro {
   display: flex;
   justify-content: center;
   padding: var(--espacio-10) 0;
 }
 
+.tablaHorarios {
+  overflow: hidden;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-tarjeta);
+  background-color: var(--surface-200);
+  box-shadow: var(--sombra-tarjeta);
+}
+
+.tablaHorarios :global(table) {
+  min-width: 920px;
+}
+
+.tablaHorarios :global(th),
+.tablaHorarios :global(td) {
+  padding: var(--espacio-3) var(--espacio-4);
+  vertical-align: middle;
+}
+
+.tablaHorarios :global(thead th) {
+  padding-top: var(--espacio-4);
+  padding-bottom: var(--espacio-4);
+  background-color: var(--surface-300);
+  color: var(--ink-600);
+}
+
+.tablaHorarios :global(tbody tr) {
+  transition: background-color var(--transicion-base);
+}
+
+.tablaHorarios :global(tbody tr:hover) {
+  background-color: var(--surface-100);
+}
+
+.tablaHorarios :global(tbody tr:last-child td) {
+  border-bottom: 0;
+}
+
+.dispositivo {
+  display: flex;
+  min-width: 200px;
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+.iconoDispositivo {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  place-items: center;
+  border-radius: var(--radio-boton);
+  background-color: var(--marca-100);
+  color: var(--marca-700);
+}
+
+.iconoDispositivo svg {
+  width: 24px;
+  height: 24px;
+}
+
+.detalleDispositivo {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.detalleDispositivo strong {
+  color: var(--ink-900);
+  font-size: var(--fs-pequeno);
+}
+
+.detalleDispositivo > span {
+  color: var(--ink-600);
+  font-size: var(--fs-etiqueta);
+}
+
+.hora {
+  color: var(--ink-900);
+  font-family: var(--fuente-titulo);
+  font-size: var(--fs-subtitulo);
+  white-space: nowrap;
+}
+
+.gramos {
+  display: inline-flex;
+  padding: var(--espacio-1) var(--espacio-3);
+  border-radius: var(--radio-pildora);
+  background-color: var(--surface-300);
+  color: var(--ink-900);
+  font-size: var(--fs-pequeno);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.dias {
+  display: flex;
+  gap: var(--espacio-1);
+}
+
+.dias > span {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  place-items: center;
+  border-radius: 50%;
+  font-size: var(--fs-etiqueta);
+  font-weight: 700;
+}
+
+.diaActivo {
+  background-color: var(--marca-500);
+  color: var(--surface-200);
+}
+
+.diaInactivo {
+  background-color: var(--surface-300);
+  color: var(--ink-600);
+}
+
+.estado {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  white-space: nowrap;
+}
+
+.estadoActivo {
+  color: var(--exito);
+  font-size: var(--fs-pequeno);
+  font-weight: 600;
+}
+
+.estadoInactivo {
+  color: var(--ink-600);
+  font-size: var(--fs-pequeno);
+  font-weight: 600;
+}
+
+.interruptor {
+  display: inline-flex;
+  width: 44px;
+  height: 26px;
+  flex: 0 0 44px;
+  align-items: center;
+  padding: 3px;
+  border: 0;
+  border-radius: var(--radio-pildora);
+  background-color: var(--ink-600);
+  cursor: pointer;
+  transition: background-color var(--transicion-base);
+}
+
+.interruptor[aria-checked='true'] {
+  background-color: var(--exito);
+}
+
+.interruptor:focus-visible {
+  outline: 3px solid var(--marca-500);
+  outline-offset: 2px;
+}
+
+.interruptor:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.interruptorControl {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--surface-200);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 20%);
+  transition: transform var(--transicion-base);
+}
+
+.interruptor[aria-checked='true'] .interruptorControl {
+  transform: translateX(18px);
+}
+
 .acciones {
   display: flex;
+  align-items: center;
   gap: var(--espacio-2);
+}
+
+.acciones .botonEditar {
+  min-width: 76px;
+  border-color: var(--borde);
+  border-radius: var(--radio-pildora);
+  background-color: var(--surface-200);
+}
+
+.acciones .botonEliminar {
+  width: 38px;
+  height: 38px;
+  padding: var(--espacio-2);
+  border: 1px solid var(--borde);
+  border-radius: 50%;
+  background-color: transparent;
+  color: var(--error);
+}
+
+.botonEliminar svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 640px) {
+  .encabezado {
+    align-items: flex-start;
+  }
+
+  .encabezado > button {
+    flex-shrink: 0;
+  }
+
+  .proximaComida {
+    padding: var(--espacio-3);
+  }
+
+  .reloj {
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+  }
+
+  .tablaHorarios {
+    overflow-x: auto;
+  }
 }

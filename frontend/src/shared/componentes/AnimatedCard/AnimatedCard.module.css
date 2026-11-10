@@ -1,0 +1,52 @@
+.tarjeta {
+  min-width: 0;
+  border-radius: var(--radio-tarjeta);
+  box-shadow: 0 0 0 transparent;
+  transition:
+    transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 200ms ease;
+}
+
+.contenido {
+  height: 100%;
+  animation: aparecer 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.tarjeta:hover,
+.tarjeta:focus-visible,
+.tarjeta:focus-within {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgb(46 36 25 / 14%);
+}
+
+.tarjeta:focus-visible {
+  outline: 2px solid var(--marca-500);
+  outline-offset: 3px;
+}
+
+.tarjeta:active,
+.tarjeta:has(:active) {
+  transform: scale(0.98);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tarjeta {
+    transition: none;
+  }
+
+  .contenido {
+    animation: none;
+  }
+}
