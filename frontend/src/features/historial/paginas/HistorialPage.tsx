@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { useMascotas } from '@/features/mascotas/hooks'
 import { obtenerMensajeError } from '@/shared/api/errores'
 import { Boton } from '@/shared/componentes/Boton'
+import { AnimatedCard } from '@/shared/componentes/AnimatedCard'
+import { Campo } from '@/shared/componentes/Campo'
 import { EstadoVacio } from '@/shared/componentes/EstadoVacio'
 import { Insignia } from '@/shared/componentes/Insignia'
 import { Select } from '@/shared/componentes/Select'
@@ -13,7 +15,9 @@ import { formatearFechaHora } from '@/shared/utils/fechas'
 import { formatearGramos } from '@/shared/utils/gramos'
 import type { Dispensacion, EstadoDispensacion } from '@/tipos'
 
+import { exportarHistorial } from '../api'
 import { useHistorial } from '../hooks'
+import type { FormatoHistorial } from '../api'
 import estilos from './HistorialPage.module.css'
 
 const POR_PAGINA = 10
@@ -23,19 +27,48 @@ export function HistorialPage() {
   const [pagina, setPagina] = useState(1)
   const [estado, setEstado] = useState<EstadoDispensacion | ''>('')
   const [mascotaId, setMascotaId] = useState('')
+  const [desde, setDesde] = useState('')
+  const [hasta, setHasta] = useState('')
+  const [formato, setFormato] = useState<FormatoHistorial>('xlsx')
+  const [errorExportacion, setErrorExportacion] = useState('')
+  const [exportando, setExportando] = useState(false)
 
   const { data, isLoading, isError, error, isPlaceholderData } = useHistorial({
     pagina,
     porPagina: POR_PAGINA,
     estado: estado || undefined,
     mascotaId: mascotaId || undefined,
+    desde: desde || undefined,
+    hasta: hasta || undefined,
   })
 
   const totalPaginas = data ? Math.max(1, Math.ceil(data.total / POR_PAGINA)) : 1
-
   function alCambiarFiltro(actualizar: () => void) {
     actualizar()
     setPagina(1)
+  }
+
+  async function descargar() {
+    setErrorExportacion('')
+    setExportando(true)
+    try {
+      const archivo = await exportarHistorial(formato, {
+        estado: estado || undefined,
+        mascotaId: mascotaId || undefined,
+        desde: desde || undefined,
+        hasta: hasta || undefined,
+      })
+      const url = URL.createObjectURL(archivo)
+      const enlace = document.createElement('a')
+      enlace.href = url
+      enlace.download = `historial-dispet.${formato}`
+      enlace.click()
+      URL.revokeObjectURL(url)
+    } catch (error) {
+      setErrorExportacion(obtenerMensajeError(error))
+    } finally {
+      setExportando(false)
+    }
   }
 
   const columnas: ColumnaTabla<Dispensacion>[] = [
@@ -73,37 +106,92 @@ export function HistorialPage() {
 
   return (
     <div className={estilos.pagina}>
-      <h1 className={estilos.titulo}>Historial</h1>
+      <header className={estilos.encabezado}>
+        <h1 className={estilos.titulo}>Historial</h1>
+        <p>Consulta las comidas de tus mascotas y filtra los registros.</p>
+      </header>
 
-      <div className={estilos.filtros}>
+      <section className={estilos.panelFiltros} aria-labelledby="titulo-filtros">
+        <div className={estilos.encabezadoFiltros}>
+          <div>
+            <h2 id="titulo-filtros">Filtrar registros</h2>
+            <p>Elige un rango de fechas, estado o mascota.</p>
+          </div>
+        </div>
+        <div className={estilos.filtros}>
+          <Campo
+            label="Desde"
+            type="date"
+            value={desde}
+            max={hasta || undefined}
+            onChange={(evento) => {
+              alCambiarFiltro(() => {
+                setDesde(evento.target.value)
+              })
+            }}
+          />
+          <Campo
+            label="Hasta"
+            type="date"
+            value={hasta}
+            min={desde || undefined}
+            onChange={(evento) => {
+              alCambiarFiltro(() => {
+                setHasta(evento.target.value)
+              })
+            }}
+          />
+          <Select
+            label="Estado"
+            opciones={[
+              { valor: '', etiqueta: 'Todos' },
+              { valor: 'exitosa', etiqueta: 'Exitosa' },
+              { valor: 'fallida', etiqueta: 'Fallida' },
+            ]}
+            value={estado}
+            onChange={(evento) => {
+              alCambiarFiltro(() => {
+                setEstado(evento.target.value as EstadoDispensacion | '')
+              })
+            }}
+          />
+          <Select
+            label="Mascota"
+            opciones={[
+              { valor: '', etiqueta: 'Todas' },
+              ...(mascotas ?? []).map((mascota) => ({
+                valor: mascota.id,
+                etiqueta: mascota.nombre,
+              })),
+            ]}
+            value={mascotaId}
+            onChange={(evento) => {
+              alCambiarFiltro(() => {
+                setMascotaId(evento.target.value)
+              })
+            }}
+          />
+        </div>
+      </section>
+      <div className={estilos.acciones}>
         <Select
-          label="Estado"
+          label="Formato"
           opciones={[
-            { valor: '', etiqueta: 'Todos' },
-            { valor: 'exitosa', etiqueta: 'Exitosa' },
-            { valor: 'fallida', etiqueta: 'Fallida' },
+            { valor: 'xlsx', etiqueta: 'Excel' },
+            { valor: 'pdf', etiqueta: 'PDF' },
+            { valor: 'docx', etiqueta: 'Word' },
           ]}
-          value={estado}
+          value={formato}
+          disabled={exportando}
           onChange={(evento) => {
-            alCambiarFiltro(() => {
-              setEstado(evento.target.value as EstadoDispensacion | '')
-            })
+            setFormato(evento.target.value as FormatoHistorial)
           }}
         />
-        <Select
-          label="Mascota"
-          opciones={[
-            { valor: '', etiqueta: 'Todas' },
-            ...(mascotas ?? []).map((mascota) => ({ valor: mascota.id, etiqueta: mascota.nombre })),
-          ]}
-          value={mascotaId}
-          onChange={(evento) => {
-            alCambiarFiltro(() => {
-              setMascotaId(evento.target.value)
-            })
-          }}
-        />
+        <Boton variante="secundario" cargando={exportando} onClick={() => void descargar()}>
+          {exportando ? 'Generando…' : 'Descargar'}
+        </Boton>
       </div>
+      {errorExportacion && <p role="alert">{errorExportacion}</p>}
 
       {isLoading && (
         <div className={estilos.centro}>
@@ -120,45 +208,47 @@ export function HistorialPage() {
       )}
 
       {!isLoading && !isError && data && (
-        <>
-          <Tabla
-            columnas={columnas}
-            filas={data.items}
-            obtenerClave={(item) => item.id}
-            vacio={
-              <EstadoVacio
-                titulo="No hay dispensaciones"
-                descripcion="Todavía no hay registros con estos filtros."
-              />
-            }
-          />
-          <div className={estilos.paginacion}>
-            <Boton
-              variante="secundario"
-              tamano="chico"
-              disabled={pagina <= 1}
-              onClick={() => {
-                setPagina((p) => p - 1)
-              }}
-            >
-              Anterior
-            </Boton>
-            <span className={estilos.infoPagina}>
-              Página {pagina} de {totalPaginas}
-              {isPlaceholderData && ' · actualizando…'}
-            </span>
-            <Boton
-              variante="secundario"
-              tamano="chico"
-              disabled={pagina >= totalPaginas}
-              onClick={() => {
-                setPagina((p) => p + 1)
-              }}
-            >
-              Siguiente
-            </Boton>
+        <AnimatedCard>
+          <div className={estilos.resultados}>
+            <Tabla
+              columnas={columnas}
+              filas={data.items}
+              obtenerClave={(item) => item.id}
+              vacio={
+                <EstadoVacio
+                  titulo="No hay dispensaciones"
+                  descripcion="Todavía no hay registros con estos filtros."
+                />
+              }
+            />
+            <div className={estilos.paginacion}>
+              <Boton
+                variante="secundario"
+                tamano="chico"
+                disabled={pagina <= 1}
+                onClick={() => {
+                  setPagina((p) => p - 1)
+                }}
+              >
+                Anterior
+              </Boton>
+              <span className={estilos.infoPagina}>
+                Página {pagina} de {totalPaginas}
+                {isPlaceholderData && ' · actualizando…'}
+              </span>
+              <Boton
+                variante="secundario"
+                tamano="chico"
+                disabled={pagina >= totalPaginas}
+                onClick={() => {
+                  setPagina((p) => p + 1)
+                }}
+              >
+                Siguiente
+              </Boton>
+            </div>
           </div>
-        </>
+        </AnimatedCard>
       )}
     </div>
   )

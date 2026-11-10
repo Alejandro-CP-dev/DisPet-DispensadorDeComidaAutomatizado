@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useMascotas } from '@/features/mascotas/hooks'
 import { obtenerMensajeError } from '@/shared/api/errores'
 import { Boton } from '@/shared/componentes/Boton'
+import { AnimatedCardGrid } from '@/shared/componentes/AnimatedCard'
 import { Campo } from '@/shared/componentes/Campo'
 import { EstadoVacio } from '@/shared/componentes/EstadoVacio'
 import { Modal } from '@/shared/componentes/Modal'
@@ -65,7 +66,7 @@ export function DispositivosPage() {
       )}
 
       {!isLoading && !isError && dispositivos && dispositivos.length > 0 && (
-        <div className={estilos.grid}>
+        <AnimatedCardGrid className={estilos.grid}>
           {dispositivos.map((dispositivo) => (
             <TarjetaDispositivo
               key={dispositivo.id}
@@ -78,7 +79,7 @@ export function DispositivosPage() {
               dispensando={dispensar.isPending && objetivo?.id === dispositivo.id}
             />
           ))}
-        </div>
+        </AnimatedCardGrid>
       )}
 
       <Modal

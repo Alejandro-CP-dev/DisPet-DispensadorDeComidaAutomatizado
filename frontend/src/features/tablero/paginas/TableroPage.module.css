@@ -4,15 +4,38 @@
   gap: var(--espacio-8);
 }
 
+.encabezado {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding: var(--espacio-6);
+  border: 1px solid var(--borde);
+  border-left: 4px solid var(--marca-500);
+  border-radius: var(--radio-tarjeta);
+  background: linear-gradient(110deg, var(--marca-100), var(--surface-200) 72%);
+  box-shadow: var(--sombra-tarjeta);
+}
+
+.etiqueta {
+  color: var(--marca-700);
+  font-size: var(--fs-etiqueta);
+  font-weight: 700;
+  letter-spacing: var(--tracking-etiqueta);
+}
+
 .titulo {
   font-size: var(--fs-titulo);
   line-height: var(--lh-titulo);
 }
 
+.descripcion {
+  color: var(--ink-600);
+}
+
 .seccion {
   display: flex;
   flex-direction: column;
-  gap: var(--espacio-4);
+  gap: var(--espacio-5);
 }
 
 .tituloSeccion {
@@ -22,13 +45,13 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 276px), 276px));
   gap: var(--espacio-4);
 }
 
 .listaHorarios {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--espacio-3);
 }
 
@@ -38,9 +61,10 @@
   justify-content: space-between;
   gap: var(--espacio-4);
   padding: var(--espacio-4);
-  border-radius: var(--radio-chico);
+  border-radius: var(--radio-tarjeta);
   background-color: var(--surface-200);
   border: 1px solid var(--borde);
+  box-shadow: var(--sombra-tarjeta);
 }
 
 .hora {
@@ -64,4 +88,207 @@
   display: flex;
   flex-direction: column;
   gap: var(--espacio-4);
+}
+
+.gridEstadisticas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--espacio-4);
+}
+
+.tarjetaEstadistica {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding: var(--espacio-5);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-tarjeta);
+  background-color: var(--surface-200);
+  box-shadow: var(--sombra-tarjeta);
+}
+
+.encabezadoGrafica {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+}
+
+.encabezadoGrafica h3 {
+  margin: 0;
+  font-size: var(--fs-cuerpo);
+  line-height: var(--lh-cuerpo);
+}
+
+.iconoGrafica {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  place-items: center;
+  border-radius: 50%;
+  background-color: var(--marca-100);
+  color: var(--marca-700);
+}
+
+.iconoGrafica svg {
+  width: 21px;
+  height: 21px;
+}
+
+.leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-4);
+  color: var(--ink-600);
+  font-size: var(--fs-pequeno);
+}
+
+.leyenda span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+}
+
+.leyenda i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.grafica {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: 180px;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: end;
+  gap: var(--espacio-1);
+}
+
+.grafica::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 35px;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(25% - 1px),
+    var(--borde) calc(25% - 1px),
+    var(--borde) 25%
+  );
+  content: '';
+  pointer-events: none;
+}
+
+.tendencia {
+  position: absolute;
+  z-index: 0;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 145px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.areaTendencia {
+  opacity: 0.72;
+}
+
+.bordeTendencia,
+.lineaTendencia {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.bordeTendencia {
+  stroke: var(--surface-200);
+  stroke-width: 6;
+}
+
+.lineaTendencia {
+  stroke: var(--marca-700);
+  stroke-width: 2.5;
+}
+
+.puntoTendencia {
+  fill: var(--marca-700);
+  stroke: var(--surface-200);
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.grupoBarras {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-width: 0;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--espacio-1);
+}
+
+.barras {
+  position: relative;
+  display: flex;
+  height: 145px;
+  align-items: end;
+  justify-content: center;
+  gap: var(--espacio-1);
+  border-bottom: 1px solid var(--ink-600);
+}
+
+.barra {
+  width: min(16px, 38%);
+  min-height: 0;
+  border-radius: var(--radio-chico) var(--radio-chico) 0 0;
+}
+
+.barraUna {
+  background-color: var(--marca-500);
+}
+
+.barraDos {
+  background-color: var(--ink-600);
+}
+
+.barraTres {
+  background-color: var(--error);
+}
+
+.etiquetaGrafica {
+  display: flex;
+  min-height: 2.2em;
+  align-items: flex-start;
+  justify-content: center;
+  color: var(--ink-600);
+  font-size: 0.68rem;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.unidad {
+  color: var(--ink-600);
+  font-size: var(--fs-pequeno);
+}
+
+@media (max-width: 640px) {
+  .encabezado {
+    padding: var(--espacio-5);
+  }
+
+  .grid,
+  .gridEstadisticas {
+    grid-template-columns: 1fr;
+  }
+
+  .filaHorario {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--espacio-2);
+  }
 }

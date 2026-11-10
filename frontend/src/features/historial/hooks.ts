@@ -1,6 +1,6 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 
-import { obtenerHistorial } from './api'
+import { obtenerHistorial, obtenerTodoHistorial } from './api'
 import type { FiltrosHistorial } from './types'
 
 export function useHistorial(filtros: FiltrosHistorial) {
@@ -8,5 +8,12 @@ export function useHistorial(filtros: FiltrosHistorial) {
     queryKey: ['historial', filtros],
     queryFn: () => obtenerHistorial(filtros),
     placeholderData: keepPreviousData,
+  })
+}
+
+export function useTodoHistorial(filtros: Omit<FiltrosHistorial, 'pagina' | 'porPagina'> = {}) {
+  return useQuery({
+    queryKey: ['historial', 'completo', filtros],
+    queryFn: () => obtenerTodoHistorial(filtros),
   })
 }
